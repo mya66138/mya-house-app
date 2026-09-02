@@ -1,0 +1,171 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fff8ee;
+  color: #3f352c;
+  font-family: "Yu Gothic UI", "Meiryo", sans-serif;
+}
+
+.container {
+  width: min(92%, 680px);
+  margin: 0 auto;
+  padding: 56px 0;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #c57652;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+}
+
+h1, h2, p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: clamp(30px, 7vw, 44px);
+}
+
+header p:not(.eyebrow), #progress {
+  color: #76695d;
+}
+
+.todo-card,
+.shopping-card {
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(109, 75, 48, 0.12);
+}
+
+.shopping-card {
+  margin-top: 24px;
+}
+
+.section-heading h2 {
+  margin-bottom: 6px;
+}
+
+#todo-form,
+#shopping-form {
+  display: flex;
+  gap: 10px;
+  margin: 24px 0 18px;
+}
+
+#todo-input,
+#shopping-input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 2px solid #efd9c5;
+  border-radius: 10px;
+  font: inherit;
+}
+
+#todo-category {
+  padding: 12px 10px;
+  border: 2px solid #efd9c5;
+  border-radius: 10px;
+  background: white;
+  color: #3f352c;
+  font: inherit;
+}
+
+#shopping-category {
+  padding: 12px 10px;
+  border: 2px solid #efd9c5;
+  border-radius: 10px;
+  background: white;
+  color: #3f352c;
+  font: inherit;
+}
+
+button {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #e58b63;
+  color: white;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #cf7049;
+}
+
+.todo-group {
+  margin-top: 26px;
+}
+
+.todo-group h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.todo-group ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  border-radius: 10px;
+  background: #fff8ee;
+}
+
+.todo-item input {
+  width: 18px;
+  height: 18px;
+}
+
+.todo-item.completed span {
+  color: #8b8178;
+  text-decoration: line-through;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+@media (max-width: 440px) {
+  .todo-card {
+    padding: 20px;
+  }
+
+  #todo-form,
+  #shopping-form {
+    flex-direction: column;
+  }
+
+  #todo-category {
+    width: 100%;
+  }
+
+  #shopping-category {
+    width: 100%;
+  }
+}

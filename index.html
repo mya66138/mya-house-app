@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>みゃー家 HOME</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">MYAA HOUSE APP</p>
+        <h1>🏠 みゃー家 HOME</h1>
+        <p>暮らしのことを、ゆるくまとめよう。</p>
+      </header>
+
+      <section class="todo-card" aria-labelledby="todo-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="todo-title">✨ やりたいこと</h2>
+            <p id="progress">本日0個達成！</p>
+          </div>
+        </div>
+
+        <form id="todo-form">
+          <label class="sr-only" for="todo-input">やりたいこと</label>
+          <input id="todo-input" type="text" placeholder="例：シンクの掃除をする" autocomplete="off" />
+          <label class="sr-only" for="todo-category">いつやりたい？</label>
+          <select id="todo-category">
+            <option value="today">今日やりたいこと</option>
+            <option value="soon">近いうちやりたいこと</option>
+            <option value="someday">そのうちやりたいこと</option>
+          </select>
+          <button type="submit">追加</button>
+        </form>
+
+        <section class="todo-group" aria-labelledby="today-title">
+          <h3 id="today-title">📌 今日やりたいこと</h3>
+          <ul id="today-list"></ul>
+        </section>
+
+        <section class="todo-group" aria-labelledby="soon-title">
+          <h3 id="soon-title">🌿 近いうちやりたいこと</h3>
+          <ul id="soon-list"></ul>
+        </section>
+
+        <section class="todo-group" aria-labelledby="someday-title">
+          <h3 id="someday-title">💭 そのうちやりたいこと</h3>
+          <ul id="someday-list"></ul>
+        </section>
+      </section>
+
+      <section class="shopping-card" aria-labelledby="shopping-title">
+        <h2 id="shopping-title">🛒 買いたいもの</h2>
+        <p>買えたらチェック。</p>
+
+        <form id="shopping-form">
+          <label class="sr-only" for="shopping-input">買いたいもの</label>
+          <input id="shopping-input" type="text" placeholder="例：牛乳" autocomplete="off" />
+          <label class="sr-only" for="shopping-category">いつ買いたい？</label>
+          <select id="shopping-category">
+            <option value="shopping-now">買いたいもの</option>
+            <option value="shopping-someday">そのうち買いたいもの</option>
+          </select>
+          <button type="submit">追加</button>
+        </form>
+
+        <section class="todo-group" aria-labelledby="shopping-now-title">
+          <h3 id="shopping-now-title">🧺 買いたいもの</h3>
+          <ul id="shopping-now-list"></ul>
+        </section>
+
+        <section class="todo-group" aria-labelledby="shopping-someday-title">
+          <h3 id="shopping-someday-title">💭 そのうち買いたいもの</h3>
+          <ul id="shopping-someday-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
