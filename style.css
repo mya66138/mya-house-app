@@ -305,5 +305,12 @@ button:hover {
   .asset-inputs {
     grid-template-columns: 1fr;
     gap: 12px;
+    width: 100%;
+  }
+
+  .asset-inputs input {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
   }
 }
