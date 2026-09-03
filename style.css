@@ -41,6 +41,27 @@ header p:not(.eyebrow), #progress {
   color: #76695d;
 }
 
+.app-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.app-nav a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #76695d;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.app-nav a:hover,
+.app-nav a.active {
+  background: #f5dfcc;
+  color: #9c5739;
+}
+
 .todo-card,
 .shopping-card {
   padding: 28px;
@@ -51,6 +72,13 @@ header p:not(.eyebrow), #progress {
 
 .shopping-card {
   margin-top: 24px;
+}
+
+.asset-card {
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(109, 75, 48, 0.12);
 }
 
 .section-heading h2 {
@@ -90,6 +118,72 @@ header p:not(.eyebrow), #progress {
   background: white;
   color: #3f352c;
   font: inherit;
+}
+
+.asset-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 24px 0 12px;
+}
+
+.asset-inputs label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.asset-inputs input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #efd9c5;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.asset-table-wrap {
+  margin-top: 26px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 13px 10px;
+  border-bottom: 1px solid #f0dfd0;
+  white-space: nowrap;
+}
+
+th {
+  color: #76695d;
+  font-size: 13px;
+}
+
+td:nth-child(2),
+td:nth-child(3) {
+  text-align: right;
+}
+
+.increase {
+  color: #4e8e5d;
+  font-weight: bold;
+}
+
+.decrease {
+  color: #bd625b;
+  font-weight: bold;
+}
+
+.empty-message {
+  margin: 18px 0 0;
+  color: #76695d;
+  text-align: center;
 }
 
 button {
@@ -133,6 +227,12 @@ button:hover {
   background: #fff8ee;
 }
 
+.todo-item span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .todo-item input {
   width: 18px;
   height: 18px;
@@ -141,6 +241,34 @@ button:hover {
 .todo-item.completed span {
   color: #8b8178;
   text-decoration: line-through;
+}
+
+.item-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.item-action {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.move-button {
+  background: #78a87b;
+}
+
+.move-button:hover {
+  background: #5f9163;
+}
+
+.delete-button {
+  background: #b88978;
+}
+
+.delete-button:hover {
+  background: #9d6b5b;
 }
 
 .sr-only {
@@ -167,5 +295,13 @@ button:hover {
 
   #shopping-category {
     width: 100%;
+  }
+
+  .asset-card {
+    padding: 20px;
+  }
+
+  .asset-inputs {
+    grid-template-columns: 1fr;
   }
 }

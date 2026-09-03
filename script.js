@@ -59,6 +59,16 @@ function updateProgress() {
   progress.textContent = `本日${completedCount}個達成！`;
 }
 
+function deleteItem(item, isShoppingItem) {
+  item.remove();
+  if (isShoppingItem) {
+    saveShoppingItems();
+  } else {
+    updateProgress();
+    saveTodos();
+  }
+}
+
 function addTodo(todoText, todoCategory = "today", completed = false) {
   const item = document.createElement("li");
   item.classList.add("todo-item");
@@ -71,13 +81,39 @@ function addTodo(todoText, todoCategory = "today", completed = false) {
   const text = document.createElement("span");
   text.textContent = todoText;
 
+  const actions = document.createElement("div");
+  actions.classList.add("item-actions");
+
+  if (todoCategory === "soon") {
+    const moveButton = document.createElement("button");
+    moveButton.type = "button";
+    moveButton.classList.add("item-action", "move-button");
+    moveButton.textContent = "今日やる";
+    moveButton.setAttribute("aria-label", `「${todoText}」を今日やりたいことへ移動`);
+    moveButton.addEventListener("click", () => {
+      item.dataset.category = "today";
+      document.querySelector("#today-list").append(item);
+      moveButton.remove();
+      saveTodos();
+    });
+    actions.append(moveButton);
+  }
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.classList.add("item-action", "delete-button");
+  deleteButton.textContent = "消す";
+  deleteButton.setAttribute("aria-label", `「${todoText}」を削除`);
+  deleteButton.addEventListener("click", () => deleteItem(item, false));
+  actions.append(deleteButton);
+
   checkbox.addEventListener("change", () => {
     item.classList.toggle("completed", checkbox.checked);
     updateProgress();
     saveTodos();
   });
 
-  item.append(checkbox, text);
+  item.append(checkbox, text, actions);
   document.querySelector(`#${todoCategory}-list`).append(item);
   item.classList.toggle("completed", completed);
 }
@@ -94,12 +130,23 @@ function addShoppingItem(itemText, itemCategory = "shopping-now", completed = fa
   const text = document.createElement("span");
   text.textContent = itemText;
 
+  const actions = document.createElement("div");
+  actions.classList.add("item-actions");
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.classList.add("item-action", "delete-button");
+  deleteButton.textContent = "消す";
+  deleteButton.setAttribute("aria-label", `「${itemText}」を削除`);
+  deleteButton.addEventListener("click", () => deleteItem(item, true));
+  actions.append(deleteButton);
+
   checkbox.addEventListener("change", () => {
     item.classList.toggle("completed", checkbox.checked);
     saveShoppingItems();
   });
 
-  item.append(checkbox, text);
+  item.append(checkbox, text, actions);
   document.querySelector(`#${itemCategory}-list`).append(item);
   item.classList.toggle("completed", completed);
 }

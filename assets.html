@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>資産記録 | みゃー家 HOME</title>
+    <link rel="icon" type="image/png" href="icon.PNG" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">HOUSE APP</p>
+        <h1>💰 資産記録</h1>
+        <p>毎月の資産を、ゆるく振り返ろう。</p>
+        <nav class="app-nav" aria-label="メインメニュー">
+          <a href="index.html">ホーム</a>
+          <a class="active" href="assets.html" aria-current="page">資産記録</a>
+        </nav>
+      </header>
+
+      <section class="asset-card" aria-labelledby="asset-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="asset-title">📈 毎月の資産</h2>
+            <p>日付と合計金額を記録すると、前回からの増減を自動で計算します。</p>
+          </div>
+        </div>
+
+        <form id="asset-form">
+          <div class="asset-inputs">
+            <div>
+              <label for="asset-date">日付</label>
+              <input id="asset-date" type="date" required />
+            </div>
+            <div>
+              <label for="asset-amount">金額</label>
+              <input id="asset-amount" type="number" min="0" step="1" inputmode="numeric" placeholder="現金＋預金口座＋証券口座" required />
+            </div>
+          </div>
+          <button type="submit">記録する</button>
+        </form>
+
+        <div class="asset-table-wrap" tabindex="0">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">日付</th>
+                <th scope="col">金額</th>
+                <th scope="col">前回からの増減</th>
+                <th scope="col"><span class="sr-only">操作</span></th>
+              </tr>
+            </thead>
+            <tbody id="asset-list"></tbody>
+          </table>
+          <p id="asset-empty" class="empty-message">まだ記録がありません。</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets.js"></script>
+  </body>
+</html>
