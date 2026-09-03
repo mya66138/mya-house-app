@@ -136,6 +136,7 @@ header p:not(.eyebrow), #progress {
 
 .asset-inputs input {
   width: 100%;
+  min-width: 0;
   padding: 12px 14px;
   border: 2px solid #efd9c5;
   border-radius: 10px;
@@ -302,7 +303,7 @@ button:hover {
   }
 
   .asset-inputs {
-    grid-template-columns: 145px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 135px) minmax(0, 1fr);
     gap: 8px;
   }
 }
