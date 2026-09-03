@@ -148,6 +148,64 @@ header p:not(.eyebrow), #progress {
   overflow-x: auto;
 }
 
+.asset-chart-section {
+  margin-top: 28px;
+}
+
+.asset-chart-section h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.asset-chart {
+  width: 100%;
+}
+
+.asset-chart:not(:empty) {
+  min-height: 170px;
+}
+
+.asset-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.chart-grid-line {
+  stroke: #efd9c5;
+  stroke-width: 1;
+}
+
+.asset-chart-line {
+  fill: none;
+  stroke: #e58b63;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.asset-chart-point {
+  fill: #ffffff;
+  stroke: #e58b63;
+  stroke-width: 3;
+}
+
+.chart-y-label,
+.chart-x-label {
+  fill: #76695d;
+  font-family: "Yu Gothic UI", "Meiryo", sans-serif;
+  font-size: 12px;
+}
+
+.chart-y-label {
+  text-anchor: end;
+}
+
+.chart-x-label {
+  text-anchor: middle;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
