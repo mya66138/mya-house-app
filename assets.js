@@ -27,6 +27,11 @@ function getAssets() {
   return JSON.parse(localStorage.getItem(ASSET_STORAGE_KEY)) || [];
 }
 
+function formatAmountInput(value) {
+  const digits = value.replace(/[^0-9]/g, "");
+  return digits === "" ? "" : Number(digits).toLocaleString("ja-JP");
+}
+
 function createSvgElement(name, attributes = {}) {
   const element = document.createElementNS(SVG_NS, name);
   Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
@@ -134,7 +139,7 @@ assetForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const date = assetDate.value;
-  const amount = Number(assetAmount.value);
+  const amount = Number(assetAmount.value.replaceAll(",", ""));
   if (!date || Number.isNaN(amount) || amount < 0) return;
 
   const assets = getAssets();
@@ -144,6 +149,10 @@ assetForm.addEventListener("submit", (event) => {
   assetDate.value = new Date().toLocaleDateString("sv-SE");
   assetDate.focus();
   renderAssets();
+});
+
+assetAmount.addEventListener("input", () => {
+  assetAmount.value = formatAmountInput(assetAmount.value);
 });
 
 assetDate.value = new Date().toLocaleDateString("sv-SE");

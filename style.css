@@ -43,6 +43,7 @@ header p:not(.eyebrow), #progress {
 
 .app-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 18px;
 }
@@ -63,7 +64,8 @@ header p:not(.eyebrow), #progress {
 }
 
 .todo-card,
-.shopping-card {
+.shopping-card,
+.media-card {
   padding: 28px;
   background: #ffffff;
   border-radius: 20px;
@@ -74,6 +76,10 @@ header p:not(.eyebrow), #progress {
   margin-top: 24px;
 }
 
+.book-section {
+  margin-top: 24px;
+}
+
 .asset-card {
   padding: 28px;
   background: #ffffff;
@@ -81,19 +87,28 @@ header p:not(.eyebrow), #progress {
   box-shadow: 0 10px 30px rgba(109, 75, 48, 0.12);
 }
 
+.media-grid {
+  display: grid;
+  gap: 24px;
+}
+
 .section-heading h2 {
   margin-bottom: 6px;
 }
 
 #todo-form,
-#shopping-form {
+#shopping-form,
+#book-form,
+#movie-form {
   display: flex;
   gap: 10px;
   margin: 24px 0 18px;
 }
 
 #todo-input,
-#shopping-input {
+#shopping-input,
+#book-input,
+#movie-input {
   flex: 1;
   min-width: 0;
   padding: 12px 14px;
@@ -277,6 +292,14 @@ button:hover {
   list-style: none;
 }
 
+.media-list {
+  display: grid;
+  gap: 10px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
 .todo-item {
   display: flex;
   align-items: center;
@@ -330,6 +353,20 @@ button:hover {
   background: #9d6b5b;
 }
 
+.finish-button {
+  background: #779bb7;
+}
+
+.finish-button:hover {
+  background: #5f819c;
+}
+
+.finished-date {
+  color: #76695d;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -344,7 +381,9 @@ button:hover {
   }
 
   #todo-form,
-  #shopping-form {
+  #shopping-form,
+  #book-form,
+  #movie-form {
     flex-direction: column;
   }
 

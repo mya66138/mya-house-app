@@ -59,6 +59,13 @@ function updateProgress() {
   progress.textContent = `本日${completedCount}個達成！`;
 }
 
+function sortCompletedItemsToBottom(list) {
+  const items = [...list.children];
+  const incompleteItems = items.filter((item) => !item.querySelector("input").checked);
+  const completedItems = items.filter((item) => item.querySelector("input").checked);
+  list.append(...incompleteItems, ...completedItems);
+}
+
 function deleteItem(item, isShoppingItem) {
   item.remove();
   if (isShoppingItem) {
@@ -92,8 +99,10 @@ function addTodo(todoText, todoCategory = "today", completed = false) {
     moveButton.setAttribute("aria-label", `「${todoText}」を今日やりたいことへ移動`);
     moveButton.addEventListener("click", () => {
       item.dataset.category = "today";
-      document.querySelector("#today-list").append(item);
+      const todayList = document.querySelector("#today-list");
+      todayList.append(item);
       moveButton.remove();
+      sortCompletedItemsToBottom(todayList);
       saveTodos();
     });
     actions.append(moveButton);
@@ -109,13 +118,16 @@ function addTodo(todoText, todoCategory = "today", completed = false) {
 
   checkbox.addEventListener("change", () => {
     item.classList.toggle("completed", checkbox.checked);
+    sortCompletedItemsToBottom(item.parentElement);
     updateProgress();
     saveTodos();
   });
 
   item.append(checkbox, text, actions);
-  document.querySelector(`#${todoCategory}-list`).append(item);
+  const todoList = document.querySelector(`#${todoCategory}-list`);
+  todoList.append(item);
   item.classList.toggle("completed", completed);
+  sortCompletedItemsToBottom(todoList);
 }
 
 function addShoppingItem(itemText, itemCategory = "shopping-now", completed = false) {
@@ -143,12 +155,15 @@ function addShoppingItem(itemText, itemCategory = "shopping-now", completed = fa
 
   checkbox.addEventListener("change", () => {
     item.classList.toggle("completed", checkbox.checked);
+    sortCompletedItemsToBottom(item.parentElement);
     saveShoppingItems();
   });
 
   item.append(checkbox, text, actions);
-  document.querySelector(`#${itemCategory}-list`).append(item);
+  const shoppingList = document.querySelector(`#${itemCategory}-list`);
+  shoppingList.append(item);
   item.classList.toggle("completed", completed);
+  sortCompletedItemsToBottom(shoppingList);
 }
 
 form.addEventListener("submit", (event) => {

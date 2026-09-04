@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>見たい映画 | みゃーの家</title>
+    <link rel="icon" type="image/png" href="icon.PNG" />
+    <link rel="apple-touch-icon" href="icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">HOUSE APP</p>
+        <h1>🎬 見たい映画</h1>
+        <p>気になる映画を、ゆるく残しておこう。</p>
+        <nav class="app-nav" aria-label="メインメニュー">
+          <a href="index.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a class="active" href="movies.html" aria-current="page">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+        </nav>
+      </header>
+
+      <section class="media-card" aria-labelledby="movie-title">
+        <h2 id="movie-title">🎞️ 見たい映画リスト</h2>
+        <p>見終えたらチェック。</p>
+        <form id="movie-form">
+          <label class="sr-only" for="movie-input">見たい映画</label>
+          <input id="movie-input" type="text" placeholder="映画のタイトル" autocomplete="off" />
+          <button type="submit">追加</button>
+        </form>
+        <ul id="movie-list" class="media-list"></ul>
+      </section>
+
+      <section class="media-card book-section" aria-labelledby="seen-movie-title">
+        <h2 id="seen-movie-title">✨ 見た映画</h2>
+        <p id="seen-movie-empty" class="empty-message">「見た」を押した映画がここに表示されます。</p>
+        <ul id="seen-movie-list" class="media-list"></ul>
+      </section>
+    </main>
+
+    <script src="movies.js"></script>
+  </body>
+</html>

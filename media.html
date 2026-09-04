@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>読みたい本 | みゃーの家</title>
+    <link rel="icon" type="image/png" href="icon.PNG" />
+    <link rel="apple-touch-icon" href="icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">HOUSE APP</p>
+        <h1>📖 読みたい本</h1>
+        <p>気になる本を、ゆるく読んでいこう。</p>
+        <nav class="app-nav" aria-label="メインメニュー">
+          <a href="index.html">やることリスト</a>
+          <a class="active" href="media.html" aria-current="page">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+        </nav>
+      </header>
+
+      <section class="media-card" aria-labelledby="current-book-title">
+        <h2 id="current-book-title">📖 今読んでる本</h2>
+        <p id="current-book-empty" class="empty-message">「読む」を押した本がここに表示されます。</p>
+        <ul id="current-book-list" class="media-list"></ul>
+      </section>
+
+      <section class="media-card book-section" aria-labelledby="book-title">
+        <h2 id="book-title">📚 読みたい本リスト</h2>
+        <form id="book-form">
+          <label class="sr-only" for="book-input">読みたい本</label>
+          <input id="book-input" type="text" placeholder="本のタイトル" autocomplete="off" />
+          <button type="submit">追加</button>
+        </form>
+        <ul id="book-list" class="media-list"></ul>
+      </section>
+
+      <section class="media-card book-section" aria-labelledby="read-book-title">
+        <h2 id="read-book-title">✨ 読んだ本</h2>
+        <p id="read-book-empty" class="empty-message">読み終わった本がここに表示されます。</p>
+        <ul id="read-book-list" class="media-list"></ul>
+      </section>
+    </main>
+
+    <script src="media.js"></script>
+  </body>
+</html>

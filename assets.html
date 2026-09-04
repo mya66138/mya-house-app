@@ -17,6 +17,8 @@
         <p>毎月の資産を、ゆるく振り返ろう。</p>
         <nav class="app-nav" aria-label="メインメニュー">
           <a href="index.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
           <a class="active" href="assets.html" aria-current="page">資産記録</a>
         </nav>
       </header>
@@ -37,7 +39,7 @@
             </div>
             <div>
               <label for="asset-amount">金額</label>
-              <input id="asset-amount" type="number" min="0" step="1" inputmode="numeric" placeholder="現金＋預金口座＋証券口座" required />
+              <input id="asset-amount" type="text" inputmode="numeric" pattern="[0-9,]*" placeholder="例：1,500,000" required />
             </div>
           </div>
           <button type="submit">記録する</button>
