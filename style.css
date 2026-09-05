@@ -48,6 +48,14 @@ header p:not(.eyebrow), #progress {
   margin-top: 18px;
 }
 
+.app-nav[hidden] {
+  display: flex;
+}
+
+.nav-toggle {
+  display: none;
+}
+
 .app-nav a {
   padding: 8px 12px;
   border-radius: 999px;
@@ -85,6 +93,89 @@ header p:not(.eyebrow), #progress {
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(109, 75, 48, 0.12);
+}
+
+.habit-card {
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(109, 75, 48, 0.12);
+}
+
+.habit-inputs {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(110px, 0.6fr) minmax(150px, 0.8fr);
+  gap: 12px;
+  margin: 24px 0 12px;
+}
+
+.habit-inputs label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.habit-inputs input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 2px solid #efd9c5;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.interval-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.interval-input span {
+  flex: 0 0 auto;
+  color: #76695d;
+  font-size: 14px;
+}
+
+.habit-list-section {
+  margin-top: 28px;
+}
+
+.habit-list-section h3 {
+  margin-bottom: 10px;
+}
+
+.habit-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.habit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #fff8ee;
+}
+
+.habit-details {
+  display: grid;
+  flex: 1;
+  gap: 3px;
+  min-width: 0;
+}
+
+.habit-details strong {
+  overflow-wrap: anywhere;
+}
+
+.habit-details span,
+.habit-details small {
+  color: #76695d;
 }
 
 .media-grid {
@@ -367,6 +458,64 @@ button:hover {
   white-space: nowrap;
 }
 
+.praise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(63, 53, 44, 0.16);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.praise-overlay.show {
+  animation: praise-popup 1.5s ease-in-out both;
+}
+
+.praise-overlay img {
+  display: block;
+  width: min(78vw, 360px);
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 18px;
+  filter: drop-shadow(0 12px 24px rgba(63, 53, 44, 0.28));
+}
+
+@keyframes praise-popup {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  15%,
+  78% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .praise-overlay.show {
+    animation-name: praise-fade;
+  }
+}
+
+@keyframes praise-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  85% {
+    opacity: 1;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -376,6 +525,44 @@ button:hover {
 }
 
 @media (max-width: 440px) {
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 18px;
+    padding: 11px 14px;
+    background: #f5dfcc;
+    color: #9c5739;
+  }
+
+  .nav-toggle:hover {
+    background: #efd1b7;
+  }
+
+  .app-nav,
+  .app-nav[hidden] {
+    display: none;
+  }
+
+  .app-nav:not([hidden]) {
+    display: grid;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(109, 75, 48, 0.12);
+  }
+
+  .app-nav a {
+    padding: 11px 12px;
+  }
+
+  .app-nav a.active::after {
+    content: " ✓";
+  }
+
   .todo-card {
     padding: 20px;
   }
@@ -397,6 +584,18 @@ button:hover {
 
   .asset-card {
     padding: 20px;
+  }
+
+  .habit-card {
+    padding: 20px;
+  }
+
+  .habit-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .habit-inputs input {
+    font-size: 16px;
   }
 
   .asset-inputs {

@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>資産記録 | みゃー家 HOME</title>
-    <link rel="icon" type="image/png" href="icon.PNG" />
-    <link rel="apple-touch-icon" href="icon.PNG" />
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
     <meta name="apple-mobile-web-app-title" content="みゃーの家" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -15,11 +15,13 @@
         <p class="eyebrow">HOUSE APP</p>
         <h1>💰 資産記録</h1>
         <p>毎月の資産を、ゆるく振り返ろう。</p>
-        <nav class="app-nav" aria-label="メインメニュー">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
           <a href="index.html">やることリスト</a>
           <a href="media.html">読みたい本</a>
           <a href="movies.html">見たい映画</a>
           <a class="active" href="assets.html" aria-current="page">資産記録</a>
+          <a href="habits.html">習慣記録</a>
         </nav>
       </header>
 
@@ -39,7 +41,7 @@
             </div>
             <div>
               <label for="asset-amount">金額</label>
-              <input id="asset-amount" type="text" inputmode="numeric" pattern="[0-9,]*" placeholder="例：1,500,000" required />
+              <input id="asset-amount" type="text" inputmode="numeric" pattern="[0-9,]*" placeholder="現金＋預金口座＋証券口座" required />
             </div>
           </div>
           <button type="submit">記録する</button>
@@ -68,6 +70,7 @@
       </section>
     </main>
 
+    <script src="menu.js"></script>
     <script src="assets.js"></script>
   </body>
 </html>

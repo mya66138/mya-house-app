@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>見たい映画 | みゃーの家</title>
-    <link rel="icon" type="image/png" href="icon.PNG" />
-    <link rel="apple-touch-icon" href="icon.PNG" />
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
     <meta name="apple-mobile-web-app-title" content="みゃーの家" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -15,11 +15,13 @@
         <p class="eyebrow">HOUSE APP</p>
         <h1>🎬 見たい映画</h1>
         <p>気になる映画を、ゆるく残しておこう。</p>
-        <nav class="app-nav" aria-label="メインメニュー">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
           <a href="index.html">やることリスト</a>
           <a href="media.html">読みたい本</a>
           <a class="active" href="movies.html" aria-current="page">見たい映画</a>
           <a href="assets.html">資産記録</a>
+          <a href="habits.html">習慣記録</a>
         </nav>
       </header>
 
@@ -41,6 +43,7 @@
       </section>
     </main>
 
+    <script src="menu.js"></script>
     <script src="movies.js"></script>
   </body>
 </html>

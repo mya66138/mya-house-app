@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>習慣記録 | みゃーの家</title>
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">HOUSE APP</p>
+        <h1>🌱 習慣記録</h1>
+        <p>続けたいことを登録して、ちょうどよい日に思い出そう。</p>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
+          <a href="index.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+          <a class="active" href="habits.html" aria-current="page">習慣記録</a>
+        </nav>
+      </header>
+
+      <section class="habit-card" aria-labelledby="habit-title">
+        <h2 id="habit-title">習慣を登録</h2>
+        <p>最後に実行した日を基準に、次の予定をやることリストへ表示します。</p>
+
+        <form id="habit-form">
+          <div class="habit-inputs">
+            <div class="habit-name-field">
+              <label for="habit-name">習慣の名前</label>
+              <input id="habit-name" type="text" placeholder="例：床を掃除する" autocomplete="off" required />
+            </div>
+            <div>
+              <label for="habit-interval">何日ごと</label>
+              <div class="interval-input">
+                <input id="habit-interval" type="number" min="1" step="1" value="1" inputmode="numeric" required />
+                <span>日ごと</span>
+              </div>
+            </div>
+            <div>
+              <label for="habit-last-date">最後に実行した日</label>
+              <input id="habit-last-date" type="date" required />
+            </div>
+          </div>
+          <button type="submit">習慣を追加</button>
+        </form>
+
+        <section class="habit-list-section" aria-labelledby="habit-list-title">
+          <h3 id="habit-list-title">登録した習慣</h3>
+          <p id="habit-empty" class="empty-message">まだ習慣が登録されていません。</p>
+          <ul id="habit-list" class="habit-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="menu.js"></script>
+    <script src="habits.js"></script>
+  </body>
+</html>

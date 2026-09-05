@@ -8,6 +8,40 @@ const shoppingCategory = document.querySelector("#shopping-category");
 const STORAGE_KEY = "myaa-house-todos";
 const DATE_KEY = "myaa-house-last-open-date";
 const SHOPPING_STORAGE_KEY = "myaa-house-shopping-list";
+const HABIT_STORAGE_KEY = "myaa-house-habits";
+const PRAISE_IMAGES = ["image/homeru/erai.PNG"];
+let praiseImageTimer;
+
+function showPraiseImage() {
+  if (PRAISE_IMAGES.length === 0) return;
+
+  let praiseOverlay = document.querySelector("#praise-overlay");
+
+  if (!praiseOverlay) {
+    praiseOverlay = document.createElement("div");
+    praiseOverlay.id = "praise-overlay";
+    praiseOverlay.className = "praise-overlay";
+    praiseOverlay.setAttribute("aria-hidden", "true");
+
+    const praiseImage = document.createElement("img");
+    praiseImage.alt = "よくできました！";
+    praiseOverlay.append(praiseImage);
+    document.body.append(praiseOverlay);
+  }
+
+  const praiseImage = praiseOverlay.querySelector("img");
+  const randomIndex = Math.floor(Math.random() * PRAISE_IMAGES.length);
+  praiseImage.src = PRAISE_IMAGES[randomIndex];
+
+  clearTimeout(praiseImageTimer);
+  praiseOverlay.classList.remove("show");
+  void praiseOverlay.offsetWidth;
+  praiseOverlay.classList.add("show");
+
+  praiseImageTimer = setTimeout(() => {
+    praiseOverlay.classList.remove("show");
+  }, 1500);
+}
 
 function getToday() {
   return new Date().toLocaleDateString("sv-SE");
@@ -18,6 +52,7 @@ function saveTodos() {
     text: item.querySelector("span").textContent,
     completed: item.querySelector("input").checked,
     category: item.dataset.category,
+    habitId: item.dataset.habitId || null,
   }));
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
@@ -50,8 +85,79 @@ function scheduleMidnightCleanup() {
   setTimeout(() => {
     removeCompletedItems();
     localStorage.setItem(DATE_KEY, getToday());
+    syncHabitTodos();
+    saveTodos();
     scheduleMidnightCleanup();
   }, nextMidnight - now);
+}
+
+function addDays(dateString, days) {
+  const date = new Date(`${dateString}T12:00:00`);
+  date.setDate(date.getDate() + days);
+  return date.toLocaleDateString("sv-SE");
+}
+
+function daysFromToday(dateString) {
+  const today = new Date(`${getToday()}T12:00:00`);
+  const date = new Date(`${dateString}T12:00:00`);
+  return Math.round((date - today) / 86400000);
+}
+
+function getHabitCategory(habit) {
+  const nextDate = addDays(habit.lastCompletedDate, habit.intervalDays);
+  const daysUntilNext = daysFromToday(nextDate);
+  if (habit.intervalDays === 1 && daysUntilNext <= 0) return "today";
+  if (habit.intervalDays >= 2 && daysUntilNext <= 1) return "soon";
+  return null;
+}
+
+function updateHabitCompletedDate(habitId) {
+  if (!habitId) return;
+  const habits = JSON.parse(localStorage.getItem(HABIT_STORAGE_KEY)) || [];
+  const updatedHabits = habits.map((habit) =>
+    habit.id === habitId ? { ...habit, lastCompletedDate: getToday() } : habit,
+  );
+  localStorage.setItem(HABIT_STORAGE_KEY, JSON.stringify(updatedHabits));
+}
+
+function syncHabitTodos() {
+  const habits = JSON.parse(localStorage.getItem(HABIT_STORAGE_KEY)) || [];
+  const habitIds = new Set(habits.map((habit) => habit.id));
+  const linkedItems = [...document.querySelectorAll(".todo-item:not(.shopping-item)[data-habit-id]")];
+
+  linkedItems.forEach((item) => {
+    if (!habitIds.has(item.dataset.habitId)) item.remove();
+  });
+
+  habits.forEach((habit) => {
+    const desiredCategory = getHabitCategory(habit);
+    const matchingItems = [...document.querySelectorAll(".todo-item:not(.shopping-item)[data-habit-id]")]
+      .filter((item) => item.dataset.habitId === habit.id);
+    const existingItem = matchingItems.shift();
+    matchingItems.forEach((item) => item.remove());
+
+    if (!desiredCategory) {
+      if (existingItem && !existingItem.querySelector("input").checked) existingItem.remove();
+      return;
+    }
+
+    if (!existingItem) {
+      addTodo(habit.name, desiredCategory, false, habit.id);
+      return;
+    }
+
+    const wasManuallyMovedToToday =
+      desiredCategory === "soon" && existingItem.dataset.category === "today";
+
+    if (
+      !existingItem.querySelector("input").checked &&
+      existingItem.dataset.category !== desiredCategory &&
+      !wasManuallyMovedToToday
+    ) {
+      existingItem.remove();
+      addTodo(habit.name, desiredCategory, false, habit.id);
+    }
+  });
 }
 
 function updateProgress() {
@@ -76,10 +182,11 @@ function deleteItem(item, isShoppingItem) {
   }
 }
 
-function addTodo(todoText, todoCategory = "today", completed = false) {
+function addTodo(todoText, todoCategory = "today", completed = false, habitId = null) {
   const item = document.createElement("li");
   item.classList.add("todo-item");
   item.dataset.category = todoCategory;
+  if (habitId) item.dataset.habitId = habitId;
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -118,6 +225,10 @@ function addTodo(todoText, todoCategory = "today", completed = false) {
 
   checkbox.addEventListener("change", () => {
     item.classList.toggle("completed", checkbox.checked);
+    if (checkbox.checked) {
+      showPraiseImage();
+      updateHabitCompletedDate(item.dataset.habitId);
+    }
     sortCompletedItemsToBottom(item.parentElement);
     updateProgress();
     saveTodos();
@@ -200,10 +311,11 @@ const todosToShow = isNewDay
 
 if (todosToShow.length === 0 && lastOpenDate === null) {
 } else {
-  todosToShow.forEach((todo) => addTodo(todo.text, todo.category || "today", todo.completed));
+  todosToShow.forEach((todo) => addTodo(todo.text, todo.category || "today", todo.completed, todo.habitId));
 }
 
 localStorage.setItem(DATE_KEY, getToday());
+syncHabitTodos();
 updateProgress();
 saveTodos();
 scheduleMidnightCleanup();
