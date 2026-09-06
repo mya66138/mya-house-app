@@ -9,7 +9,12 @@ const STORAGE_KEY = "myaa-house-todos";
 const DATE_KEY = "myaa-house-last-open-date";
 const SHOPPING_STORAGE_KEY = "myaa-house-shopping-list";
 const HABIT_STORAGE_KEY = "myaa-house-habits";
-const PRAISE_IMAGES = ["image/homeru/erai.PNG"];
+const PRAISE_IMAGES = [
+  "image/homeru/erai.PNG",
+  "image/homeru/pachipachi.PNG",
+  "image/homeru/sugo-i.PNG",
+  "image/homeru/yoshiyoshi.PNG",
+];
 let praiseImageTimer;
 
 function showPraiseImage() {
@@ -40,7 +45,7 @@ function showPraiseImage() {
 
   praiseImageTimer = setTimeout(() => {
     praiseOverlay.classList.remove("show");
-  }, 1500);
+  }, 2000);
 }
 
 function getToday() {

@@ -471,7 +471,7 @@ button:hover {
 }
 
 .praise-overlay.show {
-  animation: praise-popup 1.5s ease-in-out both;
+  animation: praise-popup 2s ease-in-out both;
 }
 
 .praise-overlay img {
