@@ -7,6 +7,7 @@ const habitEmpty = document.querySelector("#habit-empty");
 const habitStatus = document.querySelector("#habit-status");
 const HABIT_STORAGE_KEY = "myaa-house-habits";
 const TODO_STORAGE_KEY = "myaa-house-todos";
+const HISTORY_STORAGE_KEY = "myaa-house-achievement-history";
 const PRAISE_IMAGES = [
   "image/homeru/erai.PNG",
   "image/homeru/pachipachi.PNG",
@@ -48,6 +49,24 @@ function getHabits() {
 
 function saveHabits(habits) {
   localStorage.setItem(HABIT_STORAGE_KEY, JSON.stringify(habits));
+}
+
+function addHabitAchievement(habit) {
+  let history = [];
+  try {
+    history = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY)) || [];
+  } catch {
+    history = [];
+  }
+  const id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
+  history.push({
+    id,
+    text: habit.name,
+    type: "habit",
+    date: getToday(),
+    completedAt: new Date().toISOString(),
+  });
+  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
 }
 
 function addDays(dateString, days) {
@@ -105,6 +124,10 @@ function renderHabits() {
     advanceButton.className = "item-action advance-button";
     advanceButton.textContent = "前倒し";
     advanceButton.setAttribute("aria-label", `「${habit.name}」を今日実行済みにする`);
+    if (habit.lastCompletedDate === getToday()) {
+      advanceButton.disabled = true;
+      advanceButton.textContent = "今日実行済み";
+    }
     advanceButton.addEventListener("click", () => {
       const today = getToday();
       const updatedHabits = getHabits().map((itemHabit) =>
@@ -112,6 +135,7 @@ function renderHabits() {
       );
       saveHabits(updatedHabits);
       removeHabitTodo(habit.id);
+      addHabitAchievement(habit);
       showPraiseImage();
       habitStatus.textContent = `「${habit.name}」の最終実行日を${formatDate(today)}に更新しました。`;
       renderHabits();

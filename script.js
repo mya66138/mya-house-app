@@ -9,6 +9,7 @@ const STORAGE_KEY = "myaa-house-todos";
 const DATE_KEY = "myaa-house-last-open-date";
 const SHOPPING_STORAGE_KEY = "myaa-house-shopping-list";
 const HABIT_STORAGE_KEY = "myaa-house-habits";
+const HISTORY_STORAGE_KEY = "myaa-house-achievement-history";
 const PRAISE_IMAGES = [
   "image/homeru/erai.PNG",
   "image/homeru/pachipachi.PNG",
@@ -52,12 +53,37 @@ function getToday() {
   return new Date().toLocaleDateString("sv-SE");
 }
 
+function getAchievementHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function addAchievement(text, type) {
+  const id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
+  const history = getAchievementHistory();
+  history.push({ id, text, type, date: getToday(), completedAt: new Date().toISOString() });
+  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+  return id;
+}
+
+function removeAchievement(id) {
+  if (!id) return;
+  localStorage.setItem(
+    HISTORY_STORAGE_KEY,
+    JSON.stringify(getAchievementHistory().filter((entry) => entry.id !== id)),
+  );
+}
+
 function saveTodos() {
   const todos = [...document.querySelectorAll(".todo-item:not(.shopping-item)")].map((item) => ({
     text: item.querySelector("span").textContent,
     completed: item.querySelector("input").checked,
     category: item.dataset.category,
     habitId: item.dataset.habitId || null,
+    historyId: item.dataset.historyId || null,
   }));
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
@@ -187,11 +213,15 @@ function deleteItem(item, isShoppingItem) {
   }
 }
 
-function addTodo(todoText, todoCategory = "today", completed = false, habitId = null) {
+function addTodo(todoText, todoCategory = "today", completed = false, habitId = null, historyId = null) {
   const item = document.createElement("li");
   item.classList.add("todo-item");
   item.dataset.category = todoCategory;
   if (habitId) item.dataset.habitId = habitId;
+  if (historyId) item.dataset.historyId = historyId;
+  if (completed && !historyId) {
+    item.dataset.historyId = addAchievement(todoText, habitId ? "habit" : "todo");
+  }
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -233,6 +263,10 @@ function addTodo(todoText, todoCategory = "today", completed = false, habitId = 
     if (checkbox.checked) {
       showPraiseImage();
       updateHabitCompletedDate(item.dataset.habitId);
+      item.dataset.historyId = addAchievement(todoText, item.dataset.habitId ? "habit" : "todo");
+    } else {
+      removeAchievement(item.dataset.historyId);
+      delete item.dataset.historyId;
     }
     sortCompletedItemsToBottom(item.parentElement);
     updateProgress();
@@ -316,7 +350,9 @@ const todosToShow = isNewDay
 
 if (todosToShow.length === 0 && lastOpenDate === null) {
 } else {
-  todosToShow.forEach((todo) => addTodo(todo.text, todo.category || "today", todo.completed, todo.habitId));
+  todosToShow.forEach((todo) =>
+    addTodo(todo.text, todo.category || "today", todo.completed, todo.habitId, todo.historyId),
+  );
 }
 
 localStorage.setItem(DATE_KEY, getToday());

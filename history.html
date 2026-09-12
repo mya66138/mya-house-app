@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>がんばった記録 | みゃーの家</title>
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">GOOD JOB</p>
+        <h1>💮 がんばった記録</h1>
+        <p>できたことを、ひとつずつ残していこう。</p>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
+          <a href="home.html">HOME</a>
+          <a href="todo.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+          <a href="habits.html">習慣記録</a>
+          <a class="active" href="history.html" aria-current="page">がんばった記録</a>
+          <a href="backup.html">バックアップ</a>
+        </nav>
+      </header>
+
+      <section class="history-stats" aria-label="達成数">
+        <div class="history-stat-card">
+          <span>今までの累計</span>
+          <strong id="total-achievements">0</strong>
+          <small>できたこと</small>
+        </div>
+        <div class="history-stat-card">
+          <span>今月</span>
+          <strong id="monthly-achievements">0</strong>
+          <small>できたこと</small>
+        </div>
+      </section>
+
+      <section class="goal-card" aria-labelledby="goal-title">
+        <h2 id="goal-title">🎯 達成目標</h2>
+        <div class="goal-progress-grid">
+          <div class="goal-progress">
+            <div><strong>今日</strong><span id="daily-progress-text">0 / 0</span></div>
+            <progress id="daily-progress" value="0" max="1"></progress>
+          </div>
+          <div class="goal-progress">
+            <div><strong>今月</strong><span id="monthly-progress-text">0 / 0</span></div>
+            <progress id="monthly-progress" value="0" max="1"></progress>
+          </div>
+        </div>
+
+        <form id="goal-form" class="goal-form">
+          <label>一日の目標達成数<input id="daily-goal" type="number" min="1" step="1" inputmode="numeric" required /></label>
+          <label>月間の目標達成数<input id="monthly-goal" type="number" min="1" step="1" inputmode="numeric" required /></label>
+          <button type="submit">目標を保存</button>
+        </form>
+        <p id="goal-status" class="goal-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="history-card" aria-labelledby="history-title">
+        <h2 id="history-title">🐾 できたこと</h2>
+        <p id="history-empty" class="empty-message">まだ記録がありません。やることのチェックや習慣の前倒しをすると、ここに残ります。</p>
+        <ol id="history-list" class="history-list"></ol>
+      </section>
+    </main>
+
+    <script src="menu.js"></script>
+    <script src="history.js"></script>
+  </body>
+</html>
