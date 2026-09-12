@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>HOME | みゃーの家</title>
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">TODAY</p>
+        <h1>🏡 HOME</h1>
+        <p id="today-date"></p>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
+          <a class="active" href="home.html" aria-current="page">HOME</a>
+          <a href="todo.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+          <a href="habits.html">習慣記録</a>
+          <a href="backup.html">バックアップ</a>
+        </nav>
+      </header>
+
+      <section class="today-summary" aria-label="今日のまとめ">
+        <a class="today-card" href="todo.html">
+          <span class="today-icon">✨</span>
+          <strong>今日のやること</strong>
+          <span id="today-todo-count" class="today-count">0件</span>
+          <ul id="today-todos" class="today-list"></ul>
+        </a>
+        <a class="today-card" href="todo.html">
+          <span class="today-icon">🛒</span>
+          <strong>買いたいもの</strong>
+          <span id="today-shopping-count" class="today-count">0件</span>
+          <ul id="today-shopping" class="today-list"></ul>
+        </a>
+        <a class="today-card" href="habits.html">
+          <span class="today-icon">🌱</span>
+          <strong>期限が来た習慣</strong>
+          <span id="today-habit-count" class="today-count">0件</span>
+          <ul id="today-habits" class="today-list"></ul>
+        </a>
+        <a class="today-card" href="media.html">
+          <span class="today-icon">📖</span>
+          <strong>読書中の本</strong>
+          <span id="today-book-count" class="today-count">0冊</span>
+          <ul id="today-books" class="today-list"></ul>
+        </a>
+      </section>
+
+      <section class="suggestion-card" aria-labelledby="suggestion-title">
+        <div>
+          <p class="eyebrow">PICK FOR YOU</p>
+          <h2 id="suggestion-title">🎲 今日のランダム提案</h2>
+        </div>
+        <div id="random-suggestion" class="random-suggestion" aria-live="polite"></div>
+        <button id="shuffle-suggestion" type="button">別の提案を見る</button>
+      </section>
+    </main>
+
+    <script src="menu.js"></script>
+    <script src="home.js"></script>
+  </body>
+</html>
