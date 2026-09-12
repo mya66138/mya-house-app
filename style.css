@@ -608,43 +608,6 @@ button:hover {
 .backup-status.error { color: #a33f3f; }
 .backup-status.info { color: #79604d; }
 
-.backup-reminder {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 22px;
-  padding: 14px 16px;
-  border: 1px solid #e5c99f;
-  border-radius: 14px;
-  background: #fff4d9;
-  box-shadow: 0 6px 16px rgba(109, 75, 48, 0.08);
-}
-
-.backup-reminder p {
-  flex: 1;
-  margin: 0;
-}
-
-.backup-reminder a,
-.backup-reminder button {
-  flex-shrink: 0;
-  padding: 8px 12px;
-  border-radius: 9px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.backup-reminder a {
-  background: #9c6848;
-  color: #fff;
-  text-decoration: none;
-}
-
-.backup-reminder button {
-  background: transparent;
-  color: #79604d;
-}
-
 .today-summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -731,21 +694,6 @@ button:hover {
 }
 
 @media (max-width: 440px) {
-  .backup-reminder {
-    align-items: stretch;
-    flex-wrap: wrap;
-  }
-
-  .backup-reminder p {
-    flex-basis: 100%;
-  }
-
-  .backup-reminder a,
-  .backup-reminder button {
-    flex: 1;
-    text-align: center;
-  }
-
   .today-summary {
     grid-template-columns: 1fr;
   }
