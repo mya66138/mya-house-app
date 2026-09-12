@@ -4,8 +4,39 @@ const habitInterval = document.querySelector("#habit-interval");
 const habitLastDate = document.querySelector("#habit-last-date");
 const habitList = document.querySelector("#habit-list");
 const habitEmpty = document.querySelector("#habit-empty");
+const habitStatus = document.querySelector("#habit-status");
 const HABIT_STORAGE_KEY = "myaa-house-habits";
 const TODO_STORAGE_KEY = "myaa-house-todos";
+const PRAISE_IMAGES = [
+  "image/homeru/erai.PNG",
+  "image/homeru/pachipachi.PNG",
+  "image/homeru/sugo-i.PNG",
+  "image/homeru/yoshiyoshi.PNG",
+];
+let praiseImageTimer;
+
+function showPraiseImage() {
+  let praiseOverlay = document.querySelector("#praise-overlay");
+  if (!praiseOverlay) {
+    praiseOverlay = document.createElement("div");
+    praiseOverlay.id = "praise-overlay";
+    praiseOverlay.className = "praise-overlay";
+    praiseOverlay.setAttribute("aria-hidden", "true");
+
+    const praiseImage = document.createElement("img");
+    praiseImage.alt = "よくできました！";
+    praiseOverlay.append(praiseImage);
+    document.body.append(praiseOverlay);
+  }
+
+  const praiseImage = praiseOverlay.querySelector("img");
+  praiseImage.src = PRAISE_IMAGES[Math.floor(Math.random() * PRAISE_IMAGES.length)];
+  clearTimeout(praiseImageTimer);
+  praiseOverlay.classList.remove("show");
+  void praiseOverlay.offsetWidth;
+  praiseOverlay.classList.add("show");
+  praiseImageTimer = setTimeout(() => praiseOverlay.classList.remove("show"), 2000);
+}
 
 function getToday() {
   return new Date().toLocaleDateString("sv-SE");
@@ -69,8 +100,29 @@ function renderHabits() {
       renderHabits();
     });
 
+    const advanceButton = document.createElement("button");
+    advanceButton.type = "button";
+    advanceButton.className = "item-action advance-button";
+    advanceButton.textContent = "前倒し";
+    advanceButton.setAttribute("aria-label", `「${habit.name}」を今日実行済みにする`);
+    advanceButton.addEventListener("click", () => {
+      const today = getToday();
+      const updatedHabits = getHabits().map((itemHabit) =>
+        itemHabit.id === habit.id ? { ...itemHabit, lastCompletedDate: today } : itemHabit,
+      );
+      saveHabits(updatedHabits);
+      removeHabitTodo(habit.id);
+      showPraiseImage();
+      habitStatus.textContent = `「${habit.name}」の最終実行日を${formatDate(today)}に更新しました。`;
+      renderHabits();
+    });
+
+    const actions = document.createElement("div");
+    actions.className = "habit-actions";
+    actions.append(advanceButton, deleteButton);
+
     details.append(title, schedule, nextDate);
-    item.append(details, deleteButton);
+    item.append(details, actions);
     habitList.append(item);
   });
 }

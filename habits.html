@@ -17,11 +17,13 @@
         <p>続けたいことを登録して、ちょうどよい日に思い出そう。</p>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
         <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
+          <a href="today.html">今日のホーム</a>
           <a href="index.html">やることリスト</a>
           <a href="media.html">読みたい本</a>
           <a href="movies.html">見たい映画</a>
           <a href="assets.html">資産記録</a>
           <a class="active" href="habits.html" aria-current="page">習慣記録</a>
+          <a href="backup.html">バックアップ</a>
         </nav>
       </header>
 
@@ -54,6 +56,7 @@
           <h3 id="habit-list-title">登録した習慣</h3>
           <p id="habit-empty" class="empty-message">まだ習慣が登録されていません。</p>
           <ul id="habit-list" class="habit-list"></ul>
+          <p id="habit-status" class="habit-status" role="status" aria-live="polite"></p>
         </section>
       </section>
     </main>

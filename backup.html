@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>バックアップ | みゃーの家</title>
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <p class="eyebrow">HOUSE APP</p>
+        <h1>🏠 みゃーの家</h1>
+        <p>大切な記録を、端末の外にも残しておこう。</p>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
+          <a href="today.html">今日のホーム</a>
+          <a href="index.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+          <a href="habits.html">習慣記録</a>
+          <a class="active" href="backup.html" aria-current="page">バックアップ</a>
+        </nav>
+      </header>
+
+      <section class="backup-card" aria-labelledby="backup-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="backup-title">📦 バックアップ</h2>
+            <p>すべてのページに保存したデータを、1つのJSONファイルにまとめます。</p>
+          </div>
+        </div>
+
+        <div class="backup-action">
+          <h3>データを書き出す</h3>
+          <p>iPhoneでは共有画面が開きます。「ファイルに保存」を選ぶと、iCloud DriveやこのiPhone内に保存できます。</p>
+          <button id="export-button" type="button">JSONファイルを保存</button>
+        </div>
+
+        <div class="backup-action backup-restore">
+          <h3>データを取り込む</h3>
+          <p>以前にこのアプリで作成したJSONファイルを選んでください。現在のデータは、ファイル内のデータに置き換わります。</p>
+          <input id="import-file" class="sr-only" type="file" accept="application/json,.json" />
+          <button id="import-button" class="secondary-button" type="button">JSONファイルを選ぶ</button>
+          <p id="selected-file" class="selected-file" aria-live="polite">ファイルは選択されていません</p>
+          <button id="restore-button" class="danger-button" type="button" disabled>このデータを取り込む</button>
+        </div>
+
+        <p id="backup-status" class="backup-status" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <script src="menu.js"></script>
+    <script src="backup.js"></script>
+  </body>
+</html>

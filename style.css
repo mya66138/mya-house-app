@@ -178,6 +178,27 @@ header p:not(.eyebrow), #progress {
   color: #76695d;
 }
 
+.habit-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.advance-button {
+  background: #6f9a70;
+}
+
+.advance-button:hover {
+  background: #59845a;
+}
+
+.habit-status {
+  min-height: 1.5em;
+  margin: 14px 2px 0;
+  color: #39744b;
+  font-weight: 700;
+}
+
 .media-grid {
   display: grid;
   gap: 24px;
@@ -524,7 +545,235 @@ button:hover {
   clip: rect(0, 0, 0, 0);
 }
 
+.backup-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px;
+  border-radius: 20px;
+  background: #fffdf9;
+  box-shadow: 0 12px 30px rgba(109, 75, 48, 0.12);
+}
+
+.backup-action {
+  margin-top: 22px;
+  padding: 22px;
+  border: 1px solid #ead8c8;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.backup-action h3 {
+  margin-top: 0;
+}
+
+.backup-action button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+  font-size: 16px;
+  touch-action: manipulation;
+}
+
+.backup-restore {
+  background: #fffaf6;
+}
+
+.secondary-button {
+  background: #f5dfcc;
+  color: #8b4d34;
+}
+
+.danger-button {
+  background: #b14f4f;
+}
+
+.danger-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.selected-file {
+  margin: 12px 0 0;
+  overflow-wrap: anywhere;
+  font-size: 0.92rem;
+}
+
+.backup-status {
+  min-height: 1.5em;
+  margin: 18px 4px 0;
+  font-weight: 700;
+}
+
+.backup-status.success { color: #39744b; }
+.backup-status.error { color: #a33f3f; }
+.backup-status.info { color: #79604d; }
+
+.backup-reminder {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  border: 1px solid #e5c99f;
+  border-radius: 14px;
+  background: #fff4d9;
+  box-shadow: 0 6px 16px rgba(109, 75, 48, 0.08);
+}
+
+.backup-reminder p {
+  flex: 1;
+  margin: 0;
+}
+
+.backup-reminder a,
+.backup-reminder button {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.backup-reminder a {
+  background: #9c6848;
+  color: #fff;
+  text-decoration: none;
+}
+
+.backup-reminder button {
+  background: transparent;
+  color: #79604d;
+}
+
+.today-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.today-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px 10px;
+  min-width: 0;
+  padding: 20px;
+  border-radius: 18px;
+  background: #fffdf9;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(109, 75, 48, 0.11);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.today-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 30px rgba(109, 75, 48, 0.15);
+}
+
+.today-icon {
+  font-size: 1.25rem;
+}
+
+.today-count {
+  color: #9c6848;
+  font-weight: 700;
+}
+
+.today-list {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding-left: 22px;
+}
+
+.today-empty,
+.today-more {
+  color: #837467;
+}
+
+.suggestion-card {
+  margin-top: 22px;
+  padding: 26px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff4df, #f7e8d8);
+  box-shadow: 0 10px 26px rgba(109, 75, 48, 0.11);
+}
+
+.suggestion-card h2 {
+  margin-top: 2px;
+}
+
+.random-suggestion {
+  display: grid;
+  gap: 8px;
+  min-height: 82px;
+  margin: 18px 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.random-suggestion a {
+  color: #70472f;
+  font-size: 1.2rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.suggestion-label {
+  color: #837467;
+  font-size: 0.9rem;
+}
+
+#shuffle-suggestion {
+  min-height: 46px;
+}
+
 @media (max-width: 440px) {
+  .backup-reminder {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .backup-reminder p {
+    flex-basis: 100%;
+  }
+
+  .backup-reminder a,
+  .backup-reminder button {
+    flex: 1;
+    text-align: center;
+  }
+
+  .today-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .today-card,
+  .suggestion-card {
+    padding: 18px;
+  }
+
+  .habit-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .habit-actions {
+    width: 100%;
+  }
+
+  .habit-actions button {
+    flex: 1;
+    min-height: 44px;
+  }
+
+  .backup-card,
+  .backup-action {
+    padding: 18px;
+  }
+
   .nav-toggle {
     display: flex;
     align-items: center;
