@@ -70,7 +70,9 @@ function createBookItem(book, options = {}) {
       editor.querySelector("textarea").focus();
     }));
   }
-  actions.append(createButton("消す", "delete-button", options.deleteAction));
+  actions.append(createButton("消す", "delete-button", () => {
+    if (window.confirm(`「${book.text}」を削除しますか？`)) options.deleteAction();
+  }));
   item.append(actions);
 
   if (options.reviewAction) {

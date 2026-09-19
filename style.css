@@ -798,6 +798,11 @@ button:hover {
   transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
+.today-summary .expense-home-link {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
 .expense-home-link:hover {
   transform: translateY(-2px);
   box-shadow: 0 13px 30px rgba(109, 75, 48, 0.15);

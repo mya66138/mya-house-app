@@ -206,6 +206,8 @@ function sortCompletedItemsToBottom(list) {
 }
 
 function deleteItem(item, isShoppingItem) {
+  const itemText = item.querySelector("span")?.textContent || "この項目";
+  if (!window.confirm(`「${itemText}」を削除しますか？`)) return;
   item.remove();
   if (isShoppingItem) {
     saveShoppingItems();
