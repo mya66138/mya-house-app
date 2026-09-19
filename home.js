@@ -5,6 +5,7 @@ const TODAY_KEYS = {
   toReadBooks: "myaa-house-books-to-read",
   currentBooks: "myaa-house-books-current",
   movies: "myaa-house-movies",
+  expenses: "myaa-house-expenses",
 };
 
 function getList(key) {
@@ -57,6 +58,7 @@ const todos = getList(TODAY_KEYS.todos);
 const shopping = getList(TODAY_KEYS.shopping);
 const habits = getList(TODAY_KEYS.habits);
 const currentBooks = getList(TODAY_KEYS.currentBooks);
+const expenses = getList(TODAY_KEYS.expenses);
 
 document.querySelector("#today-date").textContent = new Intl.DateTimeFormat("ja-JP", {
   year: "numeric",
@@ -70,6 +72,16 @@ renderList(
   "#today-todo-count",
   todos.filter((item) => item.category === "today" && !item.completed).map((item) => item.text),
 );
+
+const currentMonth = today.slice(0, 7);
+const currentExpenseTotal = expenses
+  .filter((expense) => String(expense.date).startsWith(currentMonth))
+  .reduce((total, expense) => total + Number(expense.amount || 0), 0);
+document.querySelector("#home-expense-total").textContent = new Intl.NumberFormat("ja-JP", {
+  style: "currency",
+  currency: "JPY",
+  maximumFractionDigits: 0,
+}).format(currentExpenseTotal);
 renderList(
   "#today-shopping",
   "#today-shopping-count",

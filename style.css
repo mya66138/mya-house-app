@@ -484,6 +484,87 @@ button:hover {
   white-space: nowrap;
 }
 
+.media-item {
+  flex-wrap: wrap;
+}
+
+.media-item > span:first-child {
+  flex: 1;
+  min-width: 140px;
+  overflow-wrap: anywhere;
+}
+
+.review-button {
+  background: #a47a9c;
+}
+
+.review-button:hover {
+  background: #895f81;
+}
+
+.review-text {
+  flex-basis: 100%;
+  width: 100%;
+  margin: 4px 0 0;
+  padding: 12px 14px;
+  border-left: 4px solid #d7adce;
+  border-radius: 8px;
+  background: #fffdf9;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.review-editor,
+.review-editor label {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.review-editor {
+  flex-basis: 100%;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid #ead8c8;
+}
+
+.review-editor[hidden] {
+  display: none;
+}
+
+.review-editor label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.review-editor textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 14px;
+  border: 2px solid #e3c8dd;
+  border-radius: 10px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.review-editor-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.review-save-button {
+  background: #6f9a70;
+}
+
+.review-cancel-button {
+  background: #b88978;
+}
+
 .praise-overlay {
   position: fixed;
   inset: 0;
@@ -698,6 +779,240 @@ button:hover {
   min-height: 46px;
 }
 
+.expense-container {
+  width: min(92%, 780px);
+}
+
+.expense-home-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #eaf5e8, #fffdf9);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(109, 75, 48, 0.11);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.expense-home-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 30px rgba(109, 75, 48, 0.15);
+}
+
+.expense-home-icon {
+  font-size: 1.8rem;
+}
+
+.expense-home-link > span:nth-child(2) {
+  display: grid;
+  gap: 3px;
+}
+
+.expense-home-link small {
+  color: #76695d;
+}
+
+#home-expense-total {
+  color: #39744b;
+  font-size: 1.2rem;
+}
+
+.expense-form-card,
+.expense-summary-card,
+.expense-list-card {
+  padding: 26px;
+  border-radius: 20px;
+  background: #fffdf9;
+  box-shadow: 0 10px 26px rgba(109, 75, 48, 0.11);
+}
+
+.expense-summary-card,
+.expense-list-card {
+  margin-top: 22px;
+}
+
+.expense-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.expense-form label,
+.expense-filters label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.expense-form input,
+.expense-form select,
+.expense-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 11px 13px;
+  border: 2px solid #efd9c5;
+  border-radius: 10px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+}
+
+.expense-memo-field,
+.expense-form > button {
+  grid-column: 1 / -1;
+}
+
+.expense-form > button {
+  min-height: 48px;
+}
+
+.expense-status {
+  min-height: 1.5em;
+  margin: 12px 0 0;
+  color: #39744b;
+  font-weight: 700;
+}
+
+.expense-total-heading,
+.expense-list-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.expense-total-heading h2,
+.expense-list-heading h2 {
+  margin-bottom: 4px;
+}
+
+#expense-month-total {
+  color: #c57652;
+  font-size: clamp(26px, 7vw, 38px);
+  white-space: nowrap;
+}
+
+.expense-category-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.expense-category-summary > div {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #fff8ee;
+}
+
+.food-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px 18px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #ead8c8;
+}
+
+.food-breakdown h3 {
+  grid-column: 1 / -1;
+  margin: 0 0 4px;
+}
+
+.food-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.expense-list-heading p {
+  margin-bottom: 0;
+  color: #76695d;
+}
+
+#filtered-total {
+  color: #9c6848;
+  white-space: nowrap;
+}
+
+.expense-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff8ee;
+}
+
+.expense-month-section + .expense-month-section {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #ead8c8;
+}
+
+.expense-month-section h3 {
+  margin-bottom: 10px;
+}
+
+.expense-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.expense-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #fff8ee;
+}
+
+.expense-item-main {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+
+.expense-item-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.expense-item-heading > strong:first-child,
+.expense-item-main p {
+  overflow-wrap: anywhere;
+}
+
+.expense-item-amount {
+  color: #9c5739;
+  white-space: nowrap;
+}
+
+.expense-item-main small {
+  color: #76695d;
+}
+
+.expense-item-main p {
+  margin: 3px 0 0;
+}
+
 .history-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -826,6 +1141,64 @@ button:hover {
 }
 
 @media (max-width: 440px) {
+  .expense-home-link {
+    grid-template-columns: auto 1fr;
+    padding: 18px;
+  }
+
+  #home-expense-total {
+    grid-column: 2;
+  }
+
+  .expense-form-card,
+  .expense-summary-card,
+  .expense-list-card {
+    padding: 18px;
+  }
+
+  .expense-form,
+  .expense-category-summary,
+  .food-breakdown,
+  .expense-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .expense-memo-field,
+  .expense-form > button,
+  .food-breakdown h3 {
+    grid-column: auto;
+  }
+
+  .expense-total-heading,
+  .expense-list-heading {
+    display: grid;
+  }
+
+  .expense-list li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .expense-list li > button {
+    min-height: 44px;
+  }
+
+  .media-item .item-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .media-item .item-actions button {
+    min-height: 44px;
+  }
+
+  .review-editor-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .history-stats,
   .goal-progress-grid,
   .goal-form {

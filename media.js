@@ -18,6 +18,14 @@ function saveBooks(key, books) {
   localStorage.setItem(key, JSON.stringify(books));
 }
 
+function updateBookReview(key, bookId, review) {
+  saveBooks(
+    key,
+    getBooks(key).map((book) => (book.id === bookId ? { ...book, review } : book)),
+  );
+  renderBooks();
+}
+
 function migrateLegacyBooks() {
   if (localStorage.getItem(TO_READ_BOOKS_KEY) !== null) return;
 
@@ -55,8 +63,45 @@ function createBookItem(book, options = {}) {
   const actions = document.createElement("div");
   actions.classList.add("item-actions");
   if (options.primaryAction) actions.append(options.primaryAction);
+  if (options.reviewAction) {
+    actions.append(createButton(book.review ? "感想を編集" : "感想を書く", "review-button", () => {
+      const editor = item.querySelector(".review-editor");
+      editor.hidden = false;
+      editor.querySelector("textarea").focus();
+    }));
+  }
   actions.append(createButton("消す", "delete-button", options.deleteAction));
   item.append(actions);
+
+  if (options.reviewAction) {
+    if (book.review) {
+      const reviewText = document.createElement("p");
+      reviewText.className = "review-text";
+      reviewText.textContent = book.review;
+      item.append(reviewText);
+    }
+
+    const editor = document.createElement("div");
+    editor.className = "review-editor";
+    editor.hidden = true;
+    const label = document.createElement("label");
+    label.textContent = `「${book.text}」の感想`;
+    const textarea = document.createElement("textarea");
+    textarea.rows = 5;
+    textarea.value = book.review || "";
+    textarea.placeholder = "感じたことや、覚えておきたいことを書いてみよう。";
+    label.append(textarea);
+    const editorActions = document.createElement("div");
+    editorActions.className = "review-editor-actions";
+    const saveButton = createButton("保存", "review-save-button", () => options.reviewAction(textarea.value.trim()));
+    const cancelButton = createButton("キャンセル", "review-cancel-button", () => {
+      textarea.value = book.review || "";
+      editor.hidden = true;
+    });
+    editorActions.append(saveButton, cancelButton);
+    editor.append(label, editorActions);
+    item.append(editor);
+  }
   return item;
 }
 
@@ -94,6 +139,7 @@ function renderBooks() {
     });
     currentBookList.append(createBookItem(book, {
       primaryAction: finishButton,
+      reviewAction: (review) => updateBookReview(CURRENT_BOOKS_KEY, book.id, review),
       deleteAction: () => {
         saveBooks(CURRENT_BOOKS_KEY, getBooks(CURRENT_BOOKS_KEY).filter((item) => item.id !== book.id));
         renderBooks();
@@ -103,6 +149,7 @@ function renderBooks() {
 
   readBooks.forEach((book) => {
     readBookList.append(createBookItem(book, {
+      reviewAction: (review) => updateBookReview(READ_BOOKS_KEY, book.id, review),
       deleteAction: () => {
         saveBooks(READ_BOOKS_KEY, getBooks(READ_BOOKS_KEY).filter((item) => item.id !== book.id));
         renderBooks();

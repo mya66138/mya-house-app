@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>支出メモ | みゃーの家</title>
+    <link rel="icon" type="image/png" href="image/icon.PNG" />
+    <link rel="apple-touch-icon" href="image/icon.PNG" />
+    <meta name="apple-mobile-web-app-title" content="みゃーの家" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container expense-container">
+      <header>
+        <p class="eyebrow">EXPENSE NOTE</p>
+        <h1>💰 支出メモ</h1>
+        <p>使ったお金を、さっと記録しよう。</p>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="app-nav">☰ メニュー</button>
+        <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
+          <a href="home.html">HOME</a>
+          <a href="todo.html">やることリスト</a>
+          <a href="media.html">読みたい本</a>
+          <a href="movies.html">見たい映画</a>
+          <a href="assets.html">資産記録</a>
+          <a class="active" href="expenses.html" aria-current="page">支出メモ</a>
+          <a href="habits.html">習慣記録</a>
+          <a href="history.html">がんばった記録</a>
+          <a href="backup.html">バックアップ</a>
+        </nav>
+      </header>
+
+      <section class="expense-form-card" aria-labelledby="expense-form-title">
+        <h2 id="expense-form-title">支出を記録</h2>
+        <form id="expense-form" class="expense-form">
+          <label>日付<input id="expense-date" type="date" required /></label>
+          <label>金額<input id="expense-amount" type="number" min="1" step="1" inputmode="numeric" placeholder="例：1580" required /></label>
+          <label>支払方法
+            <select id="expense-payment">
+              <option value="cash">現金</option>
+              <option value="paypay">PayPay</option>
+              <option value="credit">クレジット</option>
+            </select>
+          </label>
+          <label>用途
+            <select id="expense-category">
+              <option value="food">食費</option>
+              <option value="daily">日用品費</option>
+              <option value="other">その他</option>
+            </select>
+          </label>
+          <label id="food-category-field">食費の種類
+            <select id="expense-food-category">
+              <option value="grocery">食材・スーパー</option>
+              <option value="dining">外食</option>
+              <option value="treat">し好品</option>
+              <option value="food-other">その他の食費</option>
+            </select>
+          </label>
+          <label class="expense-memo-field">メモ（任意）<input id="expense-memo" type="text" maxlength="200" autocomplete="off" placeholder="例：スーパーで食材" /></label>
+          <button type="submit">記録する</button>
+        </form>
+        <p id="expense-status" class="expense-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="expense-summary-card" aria-labelledby="expense-summary-title">
+        <div class="expense-total-heading">
+          <div><p class="eyebrow">THIS MONTH</p><h2 id="expense-summary-title">今月の支出</h2></div>
+          <strong id="expense-month-total">0円</strong>
+        </div>
+        <div class="expense-category-summary">
+          <div><span>🍚 食費</span><strong id="food-total">0円</strong></div>
+          <div><span>🧻 日用品費</span><strong id="daily-total">0円</strong></div>
+          <div><span>📦 その他</span><strong id="other-total">0円</strong></div>
+        </div>
+        <div class="food-breakdown">
+          <h3>食費の内訳</h3>
+          <div><span>食材・スーパー</span><strong id="grocery-total">0円</strong></div>
+          <div><span>外食</span><strong id="dining-total">0円</strong></div>
+          <div><span>し好品</span><strong id="treat-total">0円</strong></div>
+          <div><span>その他の食費</span><strong id="food-other-total">0円</strong></div>
+        </div>
+      </section>
+
+      <section class="expense-list-card" aria-labelledby="expense-list-title">
+        <div class="expense-list-heading">
+          <div><h2 id="expense-list-title">支出一覧</h2><p>当月と前月の記録を表示します。</p></div>
+          <strong id="filtered-total">表示中 0円</strong>
+        </div>
+        <div class="expense-filters">
+          <label>用途で絞り込み
+            <select id="expense-filter">
+              <option value="all">すべて</option>
+              <option value="food">食費</option>
+              <option value="daily">日用品費</option>
+              <option value="other">その他</option>
+            </select>
+          </label>
+          <label id="food-filter-field" hidden>食費の種類
+            <select id="food-filter">
+              <option value="all">食費すべて</option>
+              <option value="grocery">食材・スーパー</option>
+              <option value="dining">外食</option>
+              <option value="treat">し好品</option>
+              <option value="food-other">その他の食費</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="expense-month-section" aria-labelledby="current-expense-title">
+          <h3 id="current-expense-title"></h3>
+          <p id="current-expense-empty" class="empty-message">該当する支出はありません。</p>
+          <ul id="current-expense-list" class="expense-list"></ul>
+        </section>
+        <section class="expense-month-section" aria-labelledby="previous-expense-title">
+          <h3 id="previous-expense-title"></h3>
+          <p id="previous-expense-empty" class="empty-message">該当する支出はありません。</p>
+          <ul id="previous-expense-list" class="expense-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="menu.js"></script>
+    <script src="expenses.js"></script>
+  </body>
+</html>

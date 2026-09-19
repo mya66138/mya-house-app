@@ -15,6 +15,8 @@ const PRAISE_IMAGES = [
   "image/homeru/pachipachi.PNG",
   "image/homeru/sugo-i.PNG",
   "image/homeru/yoshiyoshi.PNG",
+  "image/homeru/oishiimonotabeyo-.PNG",
+  "image/homeru/ganbatterune-.PNG",
 ];
 let praiseImageTimer;
 

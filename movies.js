@@ -14,6 +14,14 @@ function saveMovies(key, movies) {
   localStorage.setItem(key, JSON.stringify(movies));
 }
 
+function updateMovieReview(movieId, review) {
+  saveMovies(
+    SEEN_MOVIES_KEY,
+    getMovies(SEEN_MOVIES_KEY).map((movie) => (movie.id === movieId ? { ...movie, review } : movie)),
+  );
+  renderMovies();
+}
+
 function ensureMovieIds() {
   const wantMovies = getMovies(WANT_MOVIES_KEY);
   if (wantMovies.some((movie) => !movie.id)) {
@@ -50,8 +58,45 @@ function createMovieItem(movie, options = {}) {
   const actions = document.createElement("div");
   actions.classList.add("item-actions");
   if (options.primaryAction) actions.append(options.primaryAction);
+  if (options.reviewAction) {
+    actions.append(createButton(movie.review ? "感想を編集" : "感想を書く", "review-button", () => {
+      const editor = item.querySelector(".review-editor");
+      editor.hidden = false;
+      editor.querySelector("textarea").focus();
+    }));
+  }
   actions.append(createButton("消す", "delete-button", options.deleteAction));
   item.append(actions);
+
+  if (options.reviewAction) {
+    if (movie.review) {
+      const reviewText = document.createElement("p");
+      reviewText.className = "review-text";
+      reviewText.textContent = movie.review;
+      item.append(reviewText);
+    }
+
+    const editor = document.createElement("div");
+    editor.className = "review-editor";
+    editor.hidden = true;
+    const label = document.createElement("label");
+    label.textContent = `「${movie.text}」の感想`;
+    const textarea = document.createElement("textarea");
+    textarea.rows = 5;
+    textarea.value = movie.review || "";
+    textarea.placeholder = "印象に残ったことや、好きだったところを書いてみよう。";
+    label.append(textarea);
+    const editorActions = document.createElement("div");
+    editorActions.className = "review-editor-actions";
+    const saveButton = createButton("保存", "review-save-button", () => options.reviewAction(textarea.value.trim()));
+    const cancelButton = createButton("キャンセル", "review-cancel-button", () => {
+      textarea.value = movie.review || "";
+      editor.hidden = true;
+    });
+    editorActions.append(saveButton, cancelButton);
+    editor.append(label, editorActions);
+    item.append(editor);
+  }
   return item;
 }
 
@@ -80,6 +125,7 @@ function renderMovies() {
 
   seenMovies.forEach((movie) => {
     seenMovieList.append(createMovieItem(movie, {
+      reviewAction: (review) => updateMovieReview(movie.id, review),
       deleteAction: () => {
         saveMovies(SEEN_MOVIES_KEY, getMovies(SEEN_MOVIES_KEY).filter((item) => item.id !== movie.id));
         renderMovies();
