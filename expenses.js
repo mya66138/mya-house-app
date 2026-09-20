@@ -7,8 +7,7 @@ const categoryIcons = { food: "🍚", daily: "🧻", other: "📦" };
 const foodCategoryLabels = {
   grocery: "食材・スーパー",
   dining: "外食",
-  treat: "し好品",
-  "food-other": "その他の食費",
+  treat: "嗜好品",
 };
 
 const expenseForm = document.querySelector("#expense-form");
@@ -22,6 +21,10 @@ const expenseMemo = document.querySelector("#expense-memo");
 const expenseFilter = document.querySelector("#expense-filter");
 const foodFilter = document.querySelector("#food-filter");
 const foodFilterField = document.querySelector("#food-filter-field");
+const foodBreakdownToggle = document.querySelector("#food-breakdown-toggle");
+const foodBreakdown = document.querySelector("#food-breakdown");
+const previousFoodBreakdownToggle = document.querySelector("#previous-food-breakdown-toggle");
+const previousFoodBreakdown = document.querySelector("#previous-food-breakdown");
 
 function localDate(date = new Date()) {
   return date.toLocaleDateString("sv-SE");
@@ -80,8 +83,8 @@ function createExpenseItem(expense) {
   const heading = document.createElement("div");
   heading.className = "expense-item-heading";
   const category = document.createElement("strong");
-  const foodDetail = expense.category === "food" && expense.foodCategory
-    ? `・${foodCategoryLabels[expense.foodCategory] || "その他の食費"}`
+  const foodDetail = expense.category === "food" && foodCategoryLabels[expense.foodCategory]
+    ? `・${foodCategoryLabels[expense.foodCategory]}`
     : "";
   category.textContent = `${categoryIcons[expense.category] || "📦"} ${categoryLabels[expense.category] || "その他"}${foodDetail}`;
   const amount = document.createElement("strong");
@@ -127,6 +130,7 @@ function renderExpenses() {
   const previousMonth = monthKey(new Date(now.getFullYear(), now.getMonth() - 1, 1));
   const allExpenses = getExpenses();
   const currentExpenses = allExpenses.filter((expense) => String(expense.date).startsWith(currentMonth));
+  const previousExpenses = allExpenses.filter((expense) => String(expense.date).startsWith(previousMonth));
 
   document.querySelector("#expense-month-total").textContent = formatMoney(sum(currentExpenses));
   ["food", "daily", "other"].forEach((category) => {
@@ -134,29 +138,35 @@ function renderExpenses() {
       sum(currentExpenses.filter((expense) => expense.category === category)),
     );
   });
-  ["grocery", "dining", "treat", "food-other"].forEach((foodCategory) => {
+  ["grocery", "dining", "treat"].forEach((foodCategory) => {
     document.querySelector(`#${foodCategory}-total`).textContent = formatMoney(
       sum(currentExpenses.filter((expense) => expense.category === "food" && expense.foodCategory === foodCategory)),
     );
   });
 
+  document.querySelector("#previous-month-total").textContent = formatMoney(sum(previousExpenses));
+  ["food", "daily", "other"].forEach((category) => {
+    document.querySelector(`#previous-${category}-total`).textContent = formatMoney(
+      sum(previousExpenses.filter((expense) => expense.category === category)),
+    );
+  });
+  ["grocery", "dining", "treat"].forEach((foodCategory) => {
+    document.querySelector(`#previous-${foodCategory}-total`).textContent = formatMoney(
+      sum(previousExpenses.filter((expense) => expense.category === "food" && expense.foodCategory === foodCategory)),
+    );
+  });
+
   foodFilterField.hidden = expenseFilter.value !== "food";
-  const visibleExpenses = allExpenses
-    .filter((expense) => String(expense.date).startsWith(currentMonth) || String(expense.date).startsWith(previousMonth))
+  const visibleExpenses = currentExpenses
     .filter(matchesFilter)
     .sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.createdAt).localeCompare(String(a.createdAt)));
   document.querySelector("#filtered-total").textContent = `表示中 ${formatMoney(sum(visibleExpenses))}`;
   document.querySelector("#current-expense-title").textContent = formatMonth(currentMonth);
-  document.querySelector("#previous-expense-title").textContent = formatMonth(previousMonth);
+  document.querySelector("#previous-expense-month").textContent = formatMonth(previousMonth);
   renderMonthList(
     "#current-expense-list",
     "#current-expense-empty",
     visibleExpenses.filter((expense) => String(expense.date).startsWith(currentMonth)),
-  );
-  renderMonthList(
-    "#previous-expense-list",
-    "#previous-expense-empty",
-    visibleExpenses.filter((expense) => String(expense.date).startsWith(previousMonth)),
   );
 }
 
@@ -192,6 +202,18 @@ expenseFilter.addEventListener("change", () => {
   renderExpenses();
 });
 foodFilter.addEventListener("change", renderExpenses);
+
+function setupBreakdownToggle(toggle, breakdown) {
+  toggle.addEventListener("click", () => {
+    const willOpen = breakdown.hidden;
+    breakdown.hidden = !willOpen;
+    toggle.setAttribute("aria-expanded", String(willOpen));
+    toggle.textContent = willOpen ? "内訳を閉じる" : "内訳";
+  });
+}
+
+setupBreakdownToggle(foodBreakdownToggle, foodBreakdown);
+setupBreakdownToggle(previousFoodBreakdownToggle, previousFoodBreakdown);
 
 expenseDate.value = localDate();
 expenseDate.max = localDate();

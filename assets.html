@@ -19,11 +19,11 @@
         <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
           <a href="home.html">HOME</a>
           <a href="todo.html">やることリスト</a>
+          <a href="expenses.html">支出メモ</a>
+          <a class="active" href="assets.html" aria-current="page">資産記録</a>
           <a href="media.html">読みたい本</a>
           <a href="movies.html">見たい映画</a>
-          <a class="active" href="assets.html" aria-current="page">資産記録</a>
-          <a href="expenses.html">支出メモ</a>
-          <a href="habits.html">習慣記録</a>
+          <a href="habits.html">習慣登録</a>
           <a href="history.html">がんばった記録</a>
           <a href="backup.html">バックアップ</a>
         </nav>
@@ -70,6 +70,45 @@
             <tbody id="asset-list"></tbody>
           </table>
           <p id="asset-empty" class="empty-message">まだ記録がありません。</p>
+        </div>
+      </section>
+
+      <section class="asset-card monthly-expense-card" aria-labelledby="monthly-expense-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="monthly-expense-title">🧾 毎月の支出</h2>
+            <p>家賃なども含めた、ひと月の支出合計を記録します。</p>
+          </div>
+        </div>
+
+        <form id="monthly-expense-form">
+          <div class="asset-inputs">
+            <div>
+              <label for="monthly-expense-month">年月</label>
+              <input id="monthly-expense-month" type="month" required />
+            </div>
+            <div>
+              <label for="monthly-expense-amount">支出合計額</label>
+              <input id="monthly-expense-amount" type="text" inputmode="numeric" pattern="[0-9,]*" placeholder="例：250,000" required />
+            </div>
+          </div>
+          <button type="submit">記録する</button>
+        </form>
+        <p id="monthly-expense-status" class="expense-status" role="status" aria-live="polite"></p>
+
+        <div class="asset-table-wrap" tabindex="0">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">年月</th>
+                <th scope="col">支出額</th>
+                <th scope="col">前月との差</th>
+                <th scope="col"><span class="sr-only">操作</span></th>
+              </tr>
+            </thead>
+            <tbody id="monthly-expense-list"></tbody>
+          </table>
+          <p id="monthly-expense-empty" class="empty-message">まだ記録がありません。</p>
         </div>
       </section>
     </main>

@@ -19,11 +19,11 @@
         <nav id="app-nav" class="app-nav" aria-label="メインメニュー" hidden>
           <a href="home.html">HOME</a>
           <a href="todo.html">やることリスト</a>
+          <a class="active" href="expenses.html" aria-current="page">支出メモ</a>
+          <a href="assets.html">資産記録</a>
           <a href="media.html">読みたい本</a>
           <a href="movies.html">見たい映画</a>
-          <a href="assets.html">資産記録</a>
-          <a class="active" href="expenses.html" aria-current="page">支出メモ</a>
-          <a href="habits.html">習慣記録</a>
+          <a href="habits.html">習慣登録</a>
           <a href="history.html">がんばった記録</a>
           <a href="backup.html">バックアップ</a>
         </nav>
@@ -52,8 +52,7 @@
             <select id="expense-food-category">
               <option value="grocery">食材・スーパー</option>
               <option value="dining">外食</option>
-              <option value="treat">し好品</option>
-              <option value="food-other">その他の食費</option>
+              <option value="treat">嗜好品</option>
             </select>
           </label>
           <label class="expense-memo-field">メモ（任意）<input id="expense-memo" type="text" maxlength="200" autocomplete="off" placeholder="例：スーパーで食材" /></label>
@@ -68,22 +67,47 @@
           <strong id="expense-month-total">0円</strong>
         </div>
         <div class="expense-category-summary">
-          <div><span>🍚 食費</span><strong id="food-total">0円</strong></div>
+          <div>
+            <span>🍚 食費</span>
+            <strong id="food-total">0円</strong>
+            <button id="food-breakdown-toggle" class="breakdown-toggle" type="button" aria-expanded="false" aria-controls="food-breakdown">内訳</button>
+          </div>
           <div><span>🧻 日用品費</span><strong id="daily-total">0円</strong></div>
           <div><span>📦 その他</span><strong id="other-total">0円</strong></div>
         </div>
-        <div class="food-breakdown">
+        <div id="food-breakdown" class="food-breakdown" hidden>
           <h3>食費の内訳</h3>
           <div><span>食材・スーパー</span><strong id="grocery-total">0円</strong></div>
           <div><span>外食</span><strong id="dining-total">0円</strong></div>
-          <div><span>し好品</span><strong id="treat-total">0円</strong></div>
-          <div><span>その他の食費</span><strong id="food-other-total">0円</strong></div>
+          <div><span>嗜好品</span><strong id="treat-total">0円</strong></div>
+        </div>
+      </section>
+
+      <section class="expense-summary-card previous-expense-card" aria-labelledby="previous-expense-title">
+        <div class="expense-total-heading">
+          <div><p id="previous-expense-month" class="eyebrow"></p><h2 id="previous-expense-title">前月の支出</h2></div>
+          <strong id="previous-month-total">0円</strong>
+        </div>
+        <div class="expense-category-summary previous-category-summary">
+          <div>
+            <span>🍚 食費</span>
+            <strong id="previous-food-total">0円</strong>
+            <button id="previous-food-breakdown-toggle" class="breakdown-toggle" type="button" aria-expanded="false" aria-controls="previous-food-breakdown">内訳</button>
+          </div>
+          <div><span>🧻 日用品費</span><strong id="previous-daily-total">0円</strong></div>
+          <div><span>📦 その他</span><strong id="previous-other-total">0円</strong></div>
+        </div>
+        <div id="previous-food-breakdown" class="food-breakdown" hidden>
+          <h3>食費の内訳</h3>
+          <div><span>食材・スーパー</span><strong id="previous-grocery-total">0円</strong></div>
+          <div><span>外食</span><strong id="previous-dining-total">0円</strong></div>
+          <div><span>嗜好品</span><strong id="previous-treat-total">0円</strong></div>
         </div>
       </section>
 
       <section class="expense-list-card" aria-labelledby="expense-list-title">
         <div class="expense-list-heading">
-          <div><h2 id="expense-list-title">支出一覧</h2><p>当月と前月の記録を表示します。</p></div>
+          <div><h2 id="expense-list-title">支出一覧</h2><p>今月の記録を表示します。</p></div>
           <strong id="filtered-total">表示中 0円</strong>
         </div>
         <div class="expense-filters">
@@ -100,8 +124,7 @@
               <option value="all">食費すべて</option>
               <option value="grocery">食材・スーパー</option>
               <option value="dining">外食</option>
-              <option value="treat">し好品</option>
-              <option value="food-other">その他の食費</option>
+              <option value="treat">嗜好品</option>
             </select>
           </label>
         </div>
@@ -110,11 +133,6 @@
           <h3 id="current-expense-title"></h3>
           <p id="current-expense-empty" class="empty-message">該当する支出はありません。</p>
           <ul id="current-expense-list" class="expense-list"></ul>
-        </section>
-        <section class="expense-month-section" aria-labelledby="previous-expense-title">
-          <h3 id="previous-expense-title"></h3>
-          <p id="previous-expense-empty" class="empty-message">該当する支出はありません。</p>
-          <ul id="previous-expense-list" class="expense-list"></ul>
         </section>
       </section>
     </main>

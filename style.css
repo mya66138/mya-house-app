@@ -95,6 +95,10 @@ header p:not(.eyebrow), #progress {
   box-shadow: 0 10px 30px rgba(109, 75, 48, 0.12);
 }
 
+.monthly-expense-card {
+  margin-top: 24px;
+}
+
 .habit-card {
   padding: 28px;
   background: #ffffff;
@@ -368,6 +372,16 @@ td:nth-child(3) {
 
 .decrease {
   color: #bd625b;
+  font-weight: bold;
+}
+
+.expense-increase {
+  color: #bd625b;
+  font-weight: bold;
+}
+
+.expense-decrease {
+  color: #4e8e5d;
   font-weight: bold;
 }
 
@@ -920,6 +934,24 @@ button:hover {
   background: #fff8ee;
 }
 
+.breakdown-toggle {
+  justify-self: start;
+  min-height: 34px;
+  margin-top: 3px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+#previous-month-total {
+  color: #c57652;
+  font-size: clamp(26px, 7vw, 38px);
+  white-space: nowrap;
+}
+
+.previous-category-summary {
+  margin-top: 20px;
+}
+
 .food-breakdown {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -927,6 +959,10 @@ button:hover {
   margin-top: 18px;
   padding-top: 18px;
   border-top: 1px solid #ead8c8;
+}
+
+.food-breakdown[hidden] {
+  display: none;
 }
 
 .food-breakdown h3 {
