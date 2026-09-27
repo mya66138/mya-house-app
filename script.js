@@ -18,7 +18,46 @@ const PRAISE_IMAGES = [
   "image/homeru/oishiimonotabeyo-.PNG",
   "image/homeru/ganbatterune-.PNG",
 ];
+const PRAISE_IMAGE_CYCLE_KEY = "myaa-house-praise-image-cycle";
 let praiseImageTimer;
+
+function getNextPraiseImage() {
+  const signature = PRAISE_IMAGES.join("|");
+  let cycle = null;
+
+  try {
+    cycle = JSON.parse(localStorage.getItem(PRAISE_IMAGE_CYCLE_KEY));
+  } catch {
+    cycle = null;
+  }
+
+  const hasValidCycle =
+    cycle?.signature === signature &&
+    Array.isArray(cycle.remaining) &&
+    new Set(cycle.remaining).size === cycle.remaining.length &&
+    cycle.remaining.every((image) => PRAISE_IMAGES.includes(image));
+
+  if (!hasValidCycle) cycle = { signature, remaining: [], last: null };
+
+  if (cycle.remaining.length === 0) {
+    cycle.remaining = [...PRAISE_IMAGES];
+    for (let index = cycle.remaining.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [cycle.remaining[index], cycle.remaining[randomIndex]] =
+        [cycle.remaining[randomIndex], cycle.remaining[index]];
+    }
+
+    if (cycle.remaining.length > 1 && cycle.remaining.at(-1) === cycle.last) {
+      [cycle.remaining[0], cycle.remaining[cycle.remaining.length - 1]] =
+        [cycle.remaining[cycle.remaining.length - 1], cycle.remaining[0]];
+    }
+  }
+
+  const nextImage = cycle.remaining.pop();
+  cycle.last = nextImage;
+  localStorage.setItem(PRAISE_IMAGE_CYCLE_KEY, JSON.stringify(cycle));
+  return nextImage;
+}
 
 function showPraiseImage() {
   if (PRAISE_IMAGES.length === 0) return;
@@ -38,8 +77,7 @@ function showPraiseImage() {
   }
 
   const praiseImage = praiseOverlay.querySelector("img");
-  const randomIndex = Math.floor(Math.random() * PRAISE_IMAGES.length);
-  praiseImage.src = PRAISE_IMAGES[randomIndex];
+  praiseImage.src = getNextPraiseImage();
 
   clearTimeout(praiseImageTimer);
   praiseOverlay.classList.remove("show");
