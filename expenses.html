@@ -70,38 +70,9 @@
           <div>
             <span>🍚 食費</span>
             <strong id="food-total">0円</strong>
-            <button id="food-breakdown-toggle" class="breakdown-toggle" type="button" aria-expanded="false" aria-controls="food-breakdown">内訳</button>
           </div>
           <div><span>🧻 日用品費</span><strong id="daily-total">0円</strong></div>
           <div><span>📦 その他</span><strong id="other-total">0円</strong></div>
-        </div>
-        <div id="food-breakdown" class="food-breakdown" hidden>
-          <h3>食費の内訳</h3>
-          <div><span>食材・スーパー</span><strong id="grocery-total">0円</strong></div>
-          <div><span>外食</span><strong id="dining-total">0円</strong></div>
-          <div><span>嗜好品</span><strong id="treat-total">0円</strong></div>
-        </div>
-      </section>
-
-      <section class="expense-summary-card previous-expense-card" aria-labelledby="previous-expense-title">
-        <div class="expense-total-heading">
-          <div><p id="previous-expense-month" class="eyebrow"></p><h2 id="previous-expense-title">前月の支出</h2></div>
-          <strong id="previous-month-total">0円</strong>
-        </div>
-        <div class="expense-category-summary previous-category-summary">
-          <div>
-            <span>🍚 食費</span>
-            <strong id="previous-food-total">0円</strong>
-            <button id="previous-food-breakdown-toggle" class="breakdown-toggle" type="button" aria-expanded="false" aria-controls="previous-food-breakdown">内訳</button>
-          </div>
-          <div><span>🧻 日用品費</span><strong id="previous-daily-total">0円</strong></div>
-          <div><span>📦 その他</span><strong id="previous-other-total">0円</strong></div>
-        </div>
-        <div id="previous-food-breakdown" class="food-breakdown" hidden>
-          <h3>食費の内訳</h3>
-          <div><span>食材・スーパー</span><strong id="previous-grocery-total">0円</strong></div>
-          <div><span>外食</span><strong id="previous-dining-total">0円</strong></div>
-          <div><span>嗜好品</span><strong id="previous-treat-total">0円</strong></div>
         </div>
       </section>
 
@@ -133,6 +104,33 @@
           <h3 id="current-expense-title"></h3>
           <p id="current-expense-empty" class="empty-message">該当する支出はありません。</p>
           <ul id="current-expense-list" class="expense-list"></ul>
+        </section>
+      </section>
+
+      <section class="expense-summary-card previous-expense-card" aria-labelledby="previous-expense-title">
+        <div class="expense-total-heading">
+          <div><p id="previous-expense-month" class="eyebrow"></p><h2 id="previous-expense-title">前月の支出</h2></div>
+          <strong id="previous-month-total">0円</strong>
+        </div>
+        <div class="expense-category-summary previous-category-summary">
+          <div>
+            <span>🍚 食費</span>
+            <strong id="previous-food-total">0円</strong>
+          </div>
+          <div><span>🧻 日用品費</span><strong id="previous-daily-total">0円</strong></div>
+          <div><span>📦 その他</span><strong id="previous-other-total">0円</strong></div>
+        </div>
+      </section>
+
+      <section class="expense-list-card" aria-labelledby="previous-expense-list-title">
+        <div class="expense-list-heading">
+          <div><h2 id="previous-expense-list-title">前月の支出一覧</h2><p>前月の記録を表示します。</p></div>
+          <strong id="previous-filtered-total">表示中 0円</strong>
+        </div>
+        <section class="expense-month-section" aria-labelledby="previous-list-month-title">
+          <h3 id="previous-list-month-title"></h3>
+          <p id="previous-expense-empty" class="empty-message">前月の支出はありません。</p>
+          <ul id="previous-expense-list" class="expense-list"></ul>
         </section>
       </section>
     </main>

@@ -1,9 +1,7 @@
 const TODAY_KEYS = {
   todos: "myaa-house-todos",
   shopping: "myaa-house-shopping-list",
-  habits: "myaa-house-habits",
   toReadBooks: "myaa-house-books-to-read",
-  currentBooks: "myaa-house-books-current",
   movies: "myaa-house-movies",
   expenses: "myaa-house-expenses",
 };
@@ -19,12 +17,6 @@ function getList(key) {
 
 function localDate(date = new Date()) {
   return date.toLocaleDateString("sv-SE");
-}
-
-function addDays(dateString, days) {
-  const date = new Date(`${dateString}T12:00:00`);
-  date.setDate(date.getDate() + Number(days));
-  return localDate(date);
 }
 
 function renderList(listId, countId, items, unit = "件") {
@@ -56,8 +48,6 @@ function renderList(listId, countId, items, unit = "件") {
 const today = localDate();
 const todos = getList(TODAY_KEYS.todos);
 const shopping = getList(TODAY_KEYS.shopping);
-const habits = getList(TODAY_KEYS.habits);
-const currentBooks = getList(TODAY_KEYS.currentBooks);
 const expenses = getList(TODAY_KEYS.expenses);
 
 document.querySelector("#today-date").textContent = new Intl.DateTimeFormat("ja-JP", {
@@ -87,20 +77,6 @@ renderList(
   "#today-shopping-count",
   shopping.filter((item) => item.category === "shopping-now" && !item.completed).map((item) => item.text),
 );
-renderList(
-  "#today-habits",
-  "#today-habit-count",
-  habits
-    .filter((habit) => addDays(habit.lastCompletedDate, habit.intervalDays) <= today)
-    .map((habit) => habit.name),
-);
-renderList(
-  "#today-books",
-  "#today-book-count",
-  currentBooks.map((book) => book.text),
-  "冊",
-);
-
 const suggestions = [
   ...todos
     .filter((item) => item.category === "someday" && !item.completed)
