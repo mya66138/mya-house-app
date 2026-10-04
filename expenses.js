@@ -21,6 +21,9 @@ const expenseMemo = document.querySelector("#expense-memo");
 const expenseFilter = document.querySelector("#expense-filter");
 const foodFilter = document.querySelector("#food-filter");
 const foodFilterField = document.querySelector("#food-filter-field");
+const previousExpenseFilter = document.querySelector("#previous-expense-filter");
+const previousFoodFilter = document.querySelector("#previous-food-filter");
+const previousFoodFilterField = document.querySelector("#previous-food-filter-field");
 
 function localDate(date = new Date()) {
   return date.toLocaleDateString("sv-SE");
@@ -63,11 +66,11 @@ function updateFoodCategoryVisibility() {
   if (isFood) expenseFoodCategory.value = "grocery";
 }
 
-function matchesFilter(expense) {
-  if (expenseFilter.value === "all") return true;
-  if (expense.category !== expenseFilter.value) return false;
-  if (expenseFilter.value === "food" && foodFilter.value !== "all") {
-    return expense.foodCategory === foodFilter.value;
+function matchesFilter(expense, categoryFilter, foodCategoryFilter) {
+  if (categoryFilter.value === "all") return true;
+  if (expense.category !== categoryFilter.value) return false;
+  if (categoryFilter.value === "food" && foodCategoryFilter.value !== "all") {
+    return expense.foodCategory === foodCategoryFilter.value;
   }
   return true;
 }
@@ -141,14 +144,18 @@ function renderExpenses() {
     );
   });
   foodFilterField.hidden = expenseFilter.value !== "food";
+  previousFoodFilterField.hidden = previousExpenseFilter.value !== "food";
   const visibleExpenses = currentExpenses
-    .filter(matchesFilter)
+    .filter((expense) => matchesFilter(expense, expenseFilter, foodFilter))
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.createdAt).localeCompare(String(a.createdAt)));
+  const visiblePreviousExpenses = previousExpenses
+    .filter((expense) => matchesFilter(expense, previousExpenseFilter, previousFoodFilter))
     .sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.createdAt).localeCompare(String(a.createdAt)));
   document.querySelector("#filtered-total").textContent = `表示中 ${formatMoney(sum(visibleExpenses))}`;
   document.querySelector("#current-expense-title").textContent = formatMonth(currentMonth);
   document.querySelector("#previous-expense-month").textContent = formatMonth(previousMonth);
   document.querySelector("#previous-list-month-title").textContent = formatMonth(previousMonth);
-  document.querySelector("#previous-filtered-total").textContent = `表示中 ${formatMoney(sum(previousExpenses))}`;
+  document.querySelector("#previous-filtered-total").textContent = `表示中 ${formatMoney(sum(visiblePreviousExpenses))}`;
   renderMonthList(
     "#current-expense-list",
     "#current-expense-empty",
@@ -157,7 +164,7 @@ function renderExpenses() {
   renderMonthList(
     "#previous-expense-list",
     "#previous-expense-empty",
-    previousExpenses.sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.createdAt).localeCompare(String(a.createdAt))),
+    visiblePreviousExpenses,
   );
 }
 
@@ -193,6 +200,11 @@ expenseFilter.addEventListener("change", () => {
   renderExpenses();
 });
 foodFilter.addEventListener("change", renderExpenses);
+previousExpenseFilter.addEventListener("change", () => {
+  if (previousExpenseFilter.value !== "food") previousFoodFilter.value = "all";
+  renderExpenses();
+});
+previousFoodFilter.addEventListener("change", renderExpenses);
 
 expenseDate.value = localDate();
 expenseDate.max = localDate();

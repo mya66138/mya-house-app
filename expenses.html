@@ -127,6 +127,24 @@
           <div><h2 id="previous-expense-list-title">前月の支出一覧</h2><p>前月の記録を表示します。</p></div>
           <strong id="previous-filtered-total">表示中 0円</strong>
         </div>
+        <div class="expense-filters">
+          <label>用途で絞り込み
+            <select id="previous-expense-filter">
+              <option value="all">すべて</option>
+              <option value="food">食費</option>
+              <option value="daily">日用品費</option>
+              <option value="other">その他</option>
+            </select>
+          </label>
+          <label id="previous-food-filter-field" hidden>食費の種類
+            <select id="previous-food-filter">
+              <option value="all">食費すべて</option>
+              <option value="grocery">食材・スーパー</option>
+              <option value="dining">外食</option>
+              <option value="treat">嗜好品</option>
+            </select>
+          </label>
+        </div>
         <section class="expense-month-section" aria-labelledby="previous-list-month-title">
           <h3 id="previous-list-month-title"></h3>
           <p id="previous-expense-empty" class="empty-message">前月の支出はありません。</p>
