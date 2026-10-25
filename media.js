@@ -80,6 +80,18 @@ function createBookItem(book, options = {}) {
       const reviewText = document.createElement("p");
       reviewText.className = "review-text";
       reviewText.textContent = book.review;
+      reviewText.hidden = true;
+      const reviewId = `book-review-${book.id}`;
+      reviewText.id = reviewId;
+      const reviewToggle = createButton("感想を表示", "review-toggle-button", () => {
+        const isHidden = reviewText.hidden;
+        reviewText.hidden = !isHidden;
+        reviewToggle.textContent = isHidden ? "感想を隠す" : "感想を表示";
+        reviewToggle.setAttribute("aria-expanded", String(isHidden));
+      });
+      reviewToggle.setAttribute("aria-controls", reviewId);
+      reviewToggle.setAttribute("aria-expanded", "false");
+      actions.prepend(reviewToggle);
       item.append(reviewText);
     }
 

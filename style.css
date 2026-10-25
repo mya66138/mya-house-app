@@ -516,6 +516,14 @@ button:hover {
   background: #895f81;
 }
 
+.review-toggle-button {
+  background: #7b8fa8;
+}
+
+.review-toggle-button:hover {
+  background: #637790;
+}
+
 .review-text {
   flex-basis: 100%;
   width: 100%;
