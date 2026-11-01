@@ -124,6 +124,7 @@ function saveTodos() {
     category: item.dataset.category,
     habitId: item.dataset.habitId || null,
     historyId: item.dataset.historyId || null,
+    previousHabitLastCompletedDate: item.dataset.previousHabitLastCompletedDate || null,
   }));
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
@@ -187,6 +188,21 @@ function updateHabitCompletedDate(habitId) {
   const habits = JSON.parse(localStorage.getItem(HABIT_STORAGE_KEY)) || [];
   const updatedHabits = habits.map((habit) =>
     habit.id === habitId ? { ...habit, lastCompletedDate: getToday() } : habit,
+  );
+  localStorage.setItem(HABIT_STORAGE_KEY, JSON.stringify(updatedHabits));
+}
+
+function getHabitLastCompletedDate(habitId) {
+  if (!habitId) return null;
+  const habits = JSON.parse(localStorage.getItem(HABIT_STORAGE_KEY)) || [];
+  return habits.find((habit) => habit.id === habitId)?.lastCompletedDate || null;
+}
+
+function restoreHabitCompletedDate(habitId, previousDate) {
+  if (!habitId || !previousDate) return;
+  const habits = JSON.parse(localStorage.getItem(HABIT_STORAGE_KEY)) || [];
+  const updatedHabits = habits.map((habit) =>
+    habit.id === habitId ? { ...habit, lastCompletedDate: previousDate } : habit,
   );
   localStorage.setItem(HABIT_STORAGE_KEY, JSON.stringify(updatedHabits));
 }
@@ -255,12 +271,20 @@ function deleteItem(item, isShoppingItem) {
   }
 }
 
-function addTodo(todoText, todoCategory = "today", completed = false, habitId = null, historyId = null) {
+function addTodo(
+  todoText,
+  todoCategory = "today",
+  completed = false,
+  habitId = null,
+  historyId = null,
+  previousHabitLastCompletedDate = null,
+) {
   const item = document.createElement("li");
   item.classList.add("todo-item");
   item.dataset.category = todoCategory;
   if (habitId) item.dataset.habitId = habitId;
   if (historyId) item.dataset.historyId = historyId;
+  if (previousHabitLastCompletedDate) item.dataset.previousHabitLastCompletedDate = previousHabitLastCompletedDate;
   if (completed && !historyId) {
     item.dataset.historyId = addAchievement(todoText, habitId ? "habit" : "todo");
   }
@@ -304,11 +328,19 @@ function addTodo(todoText, todoCategory = "today", completed = false, habitId = 
     item.classList.toggle("completed", checkbox.checked);
     if (checkbox.checked) {
       showPraiseImage();
-      updateHabitCompletedDate(item.dataset.habitId);
+      if (item.dataset.habitId) {
+        const previousHabitLastCompletedDate = getHabitLastCompletedDate(item.dataset.habitId);
+        if (previousHabitLastCompletedDate) {
+          item.dataset.previousHabitLastCompletedDate = previousHabitLastCompletedDate;
+        }
+        updateHabitCompletedDate(item.dataset.habitId);
+      }
       item.dataset.historyId = addAchievement(todoText, item.dataset.habitId ? "habit" : "todo");
     } else {
       removeAchievement(item.dataset.historyId);
       delete item.dataset.historyId;
+      restoreHabitCompletedDate(item.dataset.habitId, item.dataset.previousHabitLastCompletedDate);
+      delete item.dataset.previousHabitLastCompletedDate;
     }
     sortCompletedItemsToBottom(item.parentElement);
     updateProgress();
@@ -393,7 +425,14 @@ const todosToShow = isNewDay
 if (todosToShow.length === 0 && lastOpenDate === null) {
 } else {
   todosToShow.forEach((todo) =>
-    addTodo(todo.text, todo.category || "today", todo.completed, todo.habitId, todo.historyId),
+    addTodo(
+      todo.text,
+      todo.category || "today",
+      todo.completed,
+      todo.habitId,
+      todo.historyId,
+      todo.previousHabitLastCompletedDate,
+    ),
   );
 }
 

@@ -140,11 +140,12 @@ function renderAssetChart(assets) {
 
 function renderAssets() {
   const assets = getAssets().sort((a, b) => a.date.localeCompare(b.date));
+  const assetsForDisplay = [...assets].reverse();
   assetList.replaceChildren();
   assetEmpty.hidden = assets.length > 0;
 
-  assets.forEach((asset, index) => {
-    const previousAsset = assets[index - 1];
+  assetsForDisplay.forEach((asset, index) => {
+    const previousAsset = assets[assets.length - index - 2];
     const difference = previousAsset ? asset.amount - previousAsset.amount : null;
     const row = document.createElement("tr");
     const differenceClass = difference === null ? "" : difference >= 0 ? "increase" : "decrease";

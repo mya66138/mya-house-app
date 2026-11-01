@@ -862,6 +862,91 @@ button:hover {
   margin-top: 22px;
 }
 
+.fixed-expense-card {
+  margin-top: 22px;
+}
+
+.fixed-expense-heading h2 {
+  margin-bottom: 4px;
+}
+
+.fixed-expense-heading > div > p:not(.eyebrow) {
+  margin-bottom: 0;
+  color: #76695d;
+}
+
+.fixed-expense-form {
+  margin-top: 18px;
+}
+
+.fixed-expense-list {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fixed-expense-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid #ead8c8;
+  border-radius: 12px;
+  background: #fff8ee;
+}
+
+.fixed-expense-list li > div:first-child {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fixed-expense-list small {
+  color: #76695d;
+}
+
+.fixed-expense-current-state {
+  color: #9c5739;
+  font-weight: 700;
+}
+
+.fixed-expense-status-badge {
+  justify-self: start;
+  width: fit-content;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.fixed-expense-status-badge.is-planned {
+  background: #eee2bd;
+  color: #765d23;
+}
+
+.fixed-expense-status-badge.is-confirmed {
+  background: #dcebd9;
+  color: #39744b;
+}
+
+.fixed-expense-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.fixed-confirm-button {
+  background: #6f9a70;
+}
+
+.fixed-edit-button {
+  background: #7b8fa8;
+}
+
 .expense-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -929,7 +1014,7 @@ button:hover {
 
 .expense-category-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 20px;
 }
@@ -1229,6 +1314,21 @@ button:hover {
   }
 
   .expense-list li > button {
+    min-height: 44px;
+  }
+
+  .fixed-expense-list li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .fixed-expense-item-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .fixed-expense-item-actions button {
     min-height: 44px;
   }
 
