@@ -870,11 +870,6 @@ button:hover {
   margin-bottom: 4px;
 }
 
-.fixed-expense-heading > div > p:not(.eyebrow) {
-  margin-bottom: 0;
-  color: #76695d;
-}
-
 .fixed-expense-form {
   margin-top: 18px;
 }

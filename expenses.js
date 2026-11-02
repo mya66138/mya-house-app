@@ -4,7 +4,7 @@ const FIXED_EXPENSE_EXCLUSION_STORAGE_KEY = "myaa-house-fixed-expense-exclusions
 const LAST_PAYMENT_KEY = "myaa-house-expense-last-payment";
 
 const paymentLabels = { cash: "現金", paypay: "PayPay", credit: "クレジット", bank: "銀行引き落とし" };
-const categoryLabels = { food: "食費", daily: "日用品費", fixed: "固定費", other: "その他" };
+const categoryLabels = { food: "食費", daily: "日用品費", fixed: "生活基盤費", other: "その他" };
 const categoryIcons = { food: "🍚", daily: "🧻", fixed: "🏠", other: "📦" };
 const foodCategoryLabels = {
   grocery: "食材・スーパー",
