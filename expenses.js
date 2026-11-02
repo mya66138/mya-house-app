@@ -289,8 +289,11 @@ function renderFixedExpenses() {
     deleteButton.className = "item-action delete-button";
     deleteButton.textContent = "消す";
     deleteButton.addEventListener("click", () => {
-      if (!window.confirm(`「${expense.name}」の固定費登録を削除しますか？過去の支出記録は残ります。`)) return;
+      if (!window.confirm(`「${expense.name}」の固定費登録を削除しますか？今月分は支出から除外され、先月までの記録は残ります。`)) return;
       saveFixedExpenses(getFixedExpenses().filter((itemExpense) => itemExpense.id !== expense.id));
+      saveExpenses(getExpenses().filter((itemExpense) => !(
+        itemExpense.fixedExpenseId === expense.id && String(itemExpense.date).startsWith(currentMonth)
+      )));
       renderExpenses();
     });
     actions.append(deleteButton);
